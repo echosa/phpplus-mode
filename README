@@ -1,0 +1,182 @@
+zf-mode README
+===============================================================================
+DISCLAIMERS
+
+Although at this time I provide some packages and elisp files needed for 
+zf-mode, please note that I did not write, nor do I maintain, all of them.
+This means that for packages I do not maintain, if you use the ones I provide, 
+they may not be the latest version, but should work with zf-mode.
+
+The currently bundled packages that I do not maintain are:
+ - camelCase.el
+ - php-electric.el
+
+===============================================================================
+REQUIREMENTS
+
+zf-mode comes with pretty much everything neccesary to run it.  Emacs version 
+23 or later is recommended.  There are some optional packages which have 
+support within zf-mode, but which are not bundled with zf-mode itself, 
+including
+ - company-mode
+ - wrap-region
+ - hideshowvis (hideshow is included with emacs 23 typically)
+
+Note that there is a known issue with company-mode version 0.5, or at least
+with the version available from elpa.  See the INSTALL section for details.
+
+Your system needs to have at least PHP installed on it (of course), and to use
+any of the testing programs (phpunit, phpcs, phpmd), you need to have those
+installed as well.
+
+===============================================================================
+INSTALL
+
+Ensure that all required modes and elisp files are on the load path and loaded.
+Also ensure that zf-mode's elisp files are on the load path and loaded.
+Put this in your .emacs file:
+
+(require 'zf-mode)
+(zf-mode-setup)
+
+Either execute these two lines of code, or restart emacs.
+
+At this point, you should be ready to use zf-mode.  Just open up a php or phtml 
+file, and you should find yourself in zf-mode.  You should have a ZF menu and 
+"zf" should be in the mode line.
+
+To get an idea of what you can do with zf-mode, you can get a description and 
+list of keybindings/functions for zf-mode by typing:
+    C-h m
+when inside of a zf-mode file.
+
+If you have existing projects, or would like to add a new one, you can add them
+to the php-project list by running:
+    M-x php-project-add
+
+If you are starting a new project, you can use create the directories and add 
+the new project to your php-project-list all at once by running:
+    M-x zf-create-directory-structure
+
+Notes:
+
+There is a known issue with company-mode version 0.5.  If company mode isn't 
+loading, or you get errors about pysmell or gtags, you need to remove the
+gtags and pysmell backends from company-mode.  Cutomize the variable
+`company-backends` and remove the lines for `company-pysmell` and 
+`company-gtags`.
+
+While you're at it, you can also add a User-Defined company backend to the
+merged backends section of company-backends called `company-my-php-backend`.
+This backend will check the php.net documentation for completions of php
+keywords and such.
+
+===============================================================================
+CONFIGURATION
+
+You can use the various "customize ..." options in the zf-mode menus to 
+customize zf-mode.  Hopefully most of these customize options are 
+self-explanatory.  For a full list of cutomize options, just browse through
+each of the customize groups with `M-x customize-group`:
+ - php-completion
+ - php-doc
+ - php-format
+ - php-parse
+ - php-project
+ - php-tags
+ - php-test
+ - zf-mode
+ - zf-mode-extras
+
+***********
+EXECUTABLES
+
+You may need to tell emacs where various executables are.  For instance, if 
+php, phpunit, or phpcs (if you use the latter two) are not on your operating 
+system's execute path, you may need to customize the following variables to 
+tell them explicitly where the executables are:
+
+php-exectuable
+phpcs-shell-command
+phpmd-shell-command
+phpunit-shell-command
+
+************************
+PROJECTS AND DIRECTORIES
+
+To add a project to the projects list the easy way, run:
+    M-x php-project-add
+Alternatively, you can add projects manually by going to 
+    ZF -> Project -> Customize Projects 
+in the menu or by typing
+    M-x customize-variable php-project-list
+
+If you use customize, the main variable to setup here is the PHP Project List.
+This is a list of directories on your computer that correspons with a set of
+php files or project.
+
+To setup a project, insert a new item in the list and fill in the fields:
+
+Project Nickname - This is just a nickname for the project.
+Project Directory - This is the base directory for the project.  For projects
+    using the Zend Framework, this will typically be the directory where 
+    application, library, etc, are.
+Project TAGS File - This is the TAGS file for the project.
+Extra TAGS Directories - A list of directories to include when generating the 
+    project TAGS file.  You may want to put the Zend Framework directories here.
+    Project directory is included by default.
+PHPUnit Config File - This is the xml configuration file that phpunit will use
+    when phpunit is run from zf-mode.
+phpcs/phpmd Subdirectories - This is a list of directories which should be
+    included when phpcs is run for the project directory.  
+phpdoc overrides - these are project specific phpdoc information to include in
+    doc blocks.  Project agnostic defaults can be set by customizing php-doc.
+Zend Framework Global Namespace - This is the namespace of files generated 
+    outside of modules (in the "main area" so to speak).  Traditionally, this 
+    was "Default" but has recently more likely to be "Application".  This will 
+    result in, for instance, models outside of modules being named 
+    Default_Model_<name> or Application_Model_<name>.  (Only necessary for 
+    projects using Zend Framework).
+Zend Framework Default Module - This is the default module that will be used as
+    default if the Zend project makes use of a default module in the modules
+    directory instead of keeping default controllers, models, etc, inside the
+    applications directory (not in modules).  (Only necessary for projects 
+    using Zend Framework).
+
+****
+TAGS
+
+Tags files are basically compiled files of symbols that link various files
+together, allowing you, for instance, to find the definition of a function by
+"following" its name in a call somewhere else in your code.  This is done in 
+emacs using the find-tag function, bound to M-. by default.
+
+In order to use tags, you have to do two things:
+
+1.) Create a tags file
+2.) Load the tags file
+
+The php-tags portion of zf-mode eases this process.  It requires you to have 
+exhuberant-ctags installed.  This is different from ctags.  Basically, in my
+experience, if your ctags does not have a -e flag, you need to get 
+exhuberant-ctags to use.  There is a customizable variable 
+php-tag-shell-command where you can set the path to your ctags command if 
+neccessary.
+
+To create a tags file you can either go to
+    ZF -> Tags -> Create tags file
+in the menu, or run
+    M-x php-create-tag-file
+
+A tags file will be created in the location given in the php-project-list 
+settings for the current project.  After the tags file is generated, you will 
+be prompted to load the newly created tags file.
+
+Once the tags files is created, php-project will automatically load it whenever
+you switch to a file or buffer that resides inside that project's directory.
+
+===============================================================================
+AUTHORS
+
+zf-mode is written and maintained by Brian Zwahr <echosa@ehtech.in> and 
+Mike Dwyer <mdwyer@ehtech.in>.

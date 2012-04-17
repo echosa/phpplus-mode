@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-04-09 16:25:46 mdwyer"
+;; Last modified: Time-stamp: "2012-04-17 08:48:56 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -715,11 +715,15 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
                          (point) operand-end t
                          (when php-format-align-array-double-arrows "=>"))))
               (setf operand-end (+ gap operand-end) bound (+ gap bound))
-              (let ((operand-end-col (save-excursion
-                                       (goto-char operand-end)
-                                       (current-column))))
+              (let* ((operand-end-stats (save-excursion
+                                          (goto-char operand-end)
+                                          `(,(current-column) 
+                                            ,(line-number-at-pos))))
+                     (operand-end-col (first operand-end-stats))
+                     (operand-end-line (second operand-end-stats)))
                 (when (or (>= (current-column) max-length)
-                          (and (>= operand-end-col max-length)
+                          (and (or (>= operand-end-col max-length)
+                                   (> operand-end-line (line-number-at-pos)))
                                (not (and (eq pass-name 'boolean+)
                                          (string= best-match "=")))))
                   (goto-char best-match-begin)

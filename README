@@ -71,6 +71,10 @@ merged backends section of company-backends called `company-my-php-backend`.
 This backend will check the php.net documentation for completions of php
 keywords and such.
 
+Also included is a custom ruleset for phpcs, called ZFMode. You are welcome to
+use this, if you wish. In order to do so, either copy or symlink the ZFMode
+directly in the main directory to where ever your phpcs rulesets are.
+
 ===============================================================================
 CONFIGURATION
 
@@ -178,5 +182,5 @@ you switch to a file or buffer that resides inside that project's directory.
 ===============================================================================
 AUTHORS
 
-zf-mode is written and maintained by Brian Zwahr <echosa@ehtech.in> and 
+zf-mode is written and maintained by Brian Zwahr <echosa@gmail.com> and 
 Mike Dwyer <mdwyer@ehtech.in>.

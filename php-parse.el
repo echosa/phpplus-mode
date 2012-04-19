@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 2011-07-17
-;; Last modified: Time-stamp: "2012-03-26 19:09:01 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:03:46 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -26,7 +26,7 @@
 ;; ************
 ;; REQUIREMENTS
 ;; ************
-
+(require 'cl)
 (require 'string-utils)
 
 ;; *********
@@ -530,7 +530,7 @@ will be left at end of structure if matched."
   (interactive (list (intern (completing-read "Type: " php-type-regexps nil 
                                               t))
                      (read-string "Name: ")))
-  (beginning-of-buffer)
+  (goto-char (point-min))
   (catch 'found
     (while t
       (let ((parse (php-parse-search type 'forwards)))

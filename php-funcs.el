@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2012-01-24 09:33:21 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:01:03 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -24,8 +24,7 @@
 ;; ************
 ;; REQUIREMENTS
 ;; ************
-
-(require 'php-doc)
+(require 'cl)
 (require 'php-parse)
 (require 'thingatpt)
 
@@ -56,9 +55,23 @@ file/class/interface docblocks may be added in the future."
   :type 'string
   :group 'php)
 
+; declared for compiler
+(defvar zf-mode-protected-underscore)
+
 ;; *********
 ;; FUNCTIONS
 ;; *********
+; declarations for compiler
+(declare-function hs-show-all "hideshow")
+(declare-function hs-show-block "hideshow")
+(declare-function hs-hide-block "hideshow")
+(declare-function hs-overlay-at "hideshow")
+(declare-function php-single-quote-string "php-string")
+(declare-function php-format-region "php-format")
+(declare-function php-format-spacing "php-format")
+(declare-function php-doc-class-insert "php-doc")
+(declare-function php-doc-method-insert "php-doc")
+
 (defun php-jump-to-first-struct (type)
   "Jumps to the first TYPE structure in the file.  TYPE may be a
 list."
@@ -101,7 +114,7 @@ FORCE-DOC-BLOCKS.  This requires hideshow."
              (not (member (file-name-extension (buffer-file-name) t) 
                           php-hide-show-ignore-extensions)))
     (save-excursion
-      (beginning-of-buffer)
+      (goto-char (point-min))
       (let ((in-class (php-jump-to-first-class/interface)))
         (when in-class
           (php-jump-to-first-statement))
@@ -1049,8 +1062,8 @@ value is all upper case.  You may also specify DO-NOT-ASK."
   (when (and
          (or (member value '("true" "false" "null"))
              (string= (upcase value) value))
-         (string-match "\\<[A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*\\>" value))
-    (= (- (match-end 0) (match-beginning 0)) (length value))
+         (string-match "\\<[A-Z_\x7f-\xff][A-Z0-9_\x7f-\xff]*\\>" value)
+         (= (- (match-end 0) (match-beginning 0)) (length value)))
     (or do-not-ask 
         (y-or-n-p (concat "It looks like " value 
                           " is a constant. Is this so? ")))))

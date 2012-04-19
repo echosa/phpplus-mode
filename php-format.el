@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-04-19 09:20:56 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 15:48:47 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -117,6 +117,17 @@ script cleanup functions."
 ;; *********
 ;; FUNCTIONS
 ;; *********
+; declarations for compiler
+(declare-function php-jump-to-first-statement "php-funcs")
+(declare-function php-jump-to-first-class/interface "php-funcs")
+(declare-function php-kill-current "php-edit")
+(declare-function php-yank "php-edit")
+(declare-function php-format-spacing "php-format")
+(declare-function php-change-string-quotes "php-string")
+(declare-function php-implode-concats-in-statement "php-string")
+(declare-function zf-mode "zf-mode")
+(declare-function hs-already-hidden-p "hideshow")
+(declare-function hs-hide-block "hideshow")
 
 (defun php-rearrange-current (&optional type sit-for)
   "Kills the current TYPE PHP structure and yanks it into its
@@ -150,7 +161,7 @@ all."
           (forward-char)
           (delete-region (point) pos)
           (newline 3)
-          (previous-line)
+          (forward-line -1)
           (indent-according-to-mode))
         (php-yank)
         (when (integerp sit-for)
@@ -1095,8 +1106,8 @@ added."
            (regexp (if no-strip (concat regexp "\\|\n") regexp))
            (break-points (php-locate-non-enclosed regexp end skip-sexps))
            (match-start (if (integerp match-start) match-start 0))
-           (break-points (mapcar '(lambda (x) `(,(+ (first x) match-start)
-                                                ,(- (second x) match-start))) 
+           (break-points (mapcar (lambda (x) `(,(+ (first x) match-start)
+                                               ,(- (second x) match-start))) 
                                  break-points))
            (break-points (add-to-list 'break-points
                                       (if (integerp end)
@@ -1204,7 +1215,7 @@ a line, just go to the next one."
            (save-match-data
              (newline-and-indent)
              (when (save-excursion
-                     (previous-line)
+                     (forward-line -1)
                      (looking-at "\\*+[[:space:]]*"))
                (insert (match-string-no-properties 0)))))
           (t (if (not (and php-auto-fill 
@@ -1229,7 +1240,7 @@ a line, just go to the next one."
                        (newline)
                        (indent-to cur-col))
                      (when (looking-at-p non-ws-re)
-                       (previous-line))))
+                       (forward-line -1))))
                  (indent-according-to-mode)))))))
 
 (defun php-clean-up-whitespace-around-operators (begin end &optional 

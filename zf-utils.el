@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 2011-07-19
-;; Last modified: Time-stamp: "2011-11-16 11:23:13 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:31:30 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -78,11 +78,13 @@ applicable members of a list."
 (defun hs-goto-line (line)
   "Goes to the given line, expanding the code if its hidden by hide-show."
   (interactive "nGoto Line: ")
-  (goto-line line)
+  (goto-char (point-min))
+  (forward-line (1- line))
   (when (and (featurep 'hideshow)
              (get-char-property (point) 'hs))
     (hs-show-block)
-    (goto-line line)))
+    (goto-char (point-min))
+    (forward-line (1- line))))
 
 (bind-key-if-fboundp (kbd "s-l") 'hs-goto-line)
 

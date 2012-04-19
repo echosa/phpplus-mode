@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2011-10-07 15:23:52 bzwahr"
+;; Last modified: Time-stamp: "2012-04-19 16:28:08 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -42,7 +42,7 @@
 ;;; ************
 ;;; Requirements
 ;;; ************
-
+(require 'files)
 (require 'php-parse)
 (require 'php-project)
 
@@ -313,7 +313,7 @@ directory of the current buffer's project."
   (let ((user-called (or (called-interactively-p 'interactive) interactive)))
     (php-compile-run all-p nil :phpmd t :user-called user-called)))
 
-(defun phpmd-all ()
+(defun phpmd-all (&optional interactive)
   "This is just a convenience function that runs the phpmd function with an 
 argument."
   (interactive)
@@ -387,7 +387,7 @@ point is currently in."
         end)
     (php-project-open-phpunit-config)
     (save-excursion
-      (beginning-of-buffer)
+      (goto-char (point-min))
       (when (re-search-forward "<logging>" nil t)
         (beginning-of-line)
         (setq beg (point))
@@ -397,7 +397,7 @@ point is currently in."
         (comment-or-uncomment-region beg end)
         (save-buffer)
         (goto-char beg)
-        (previous-line)
+        (forward-line -1)
         (if (comment-search-forward end t)
             (message "PHPUnit logging disabled.")
           (message "PHPUnit logging enabled."))))
@@ -472,11 +472,10 @@ point is currently in."
   (let ((current-buffer (buffer-name))
         start)
     (pop-to-buffer "*compilation*" nil t)
-    (toggle-read-only)
-    (re-search-forward "EXIT_STATUS")
-    (beginning-of-line)
-    (delete-region (point) (line-end-position 2))
-    (toggle-read-only)
+    (let ((inhibit-read-only nil))
+      (re-search-forward "EXIT_STATUS")
+      (beginning-of-line)
+      (delete-region (point) (line-end-position 2)))
     (pop-to-buffer current-buffer)))
 
 (defun php-test-customize ()

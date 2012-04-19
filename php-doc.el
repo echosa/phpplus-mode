@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-26-2010
-;; Last modified: Time-stamp: "2011-11-18 11:41:44 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 15:39:34 bzwahr"
 ;; Copyright © 2010 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -16,6 +16,14 @@
 ;; such as author, description, and parameters.
 
 ;; *************************************************************************
+
+;; ************
+;; REQUIREMENTS
+;; ************
+(require 'php-completion)
+(require 'php-funcs)
+(require 'php-project)
+(require 'string-utils)
 
 ;; ******
 ;; CUSTOM
@@ -75,11 +83,10 @@ function name."
 ;; *********
 ;; FUNCTIONS
 ;; *********
-
 (defun php-doc-get-field-from-buffer (field)
   (let (category)
     (save-excursion
-      (beginning-of-buffer)
+      (goto-char (point-min))
       (when (re-search-forward (concat "@" field "\\s +") nil t)
         (buffer-substring-no-properties (point) (line-end-position))))))
 
@@ -200,7 +207,7 @@ and interfaces."
       (php-doc-newline column))
     (when (php-doc-insert-php-version php-version column)
       (php-doc-newline column))
-    (php-doc-insert-cat-pack-sub category package subpackage)
+    (php-doc-insert-cat-pack-sub category package subpackage column)
     (php-doc-insert-author author column t)
     (php-doc-insert-copyright copyright column)
     (php-doc-insert-license license column)
@@ -232,7 +239,7 @@ and interfaces."
       (php-doc-newline column))
     (when (php-doc-insert-desc long-desc column)
       (php-doc-newline column))
-    (php-doc-insert-cat-pack-sub category package subpackage)
+    (php-doc-insert-cat-pack-sub category package subpackage column)
     (php-doc-insert-author author column t)
     (php-doc-insert-license license column)
     (php-doc-insert-link link column)
@@ -412,7 +419,7 @@ arguments."
   (unless (nil-or-blank subpackage)
     (php-doc-insert (concat "@subpackage " subpackage) column)))
 
-(defun php-doc-insert-cat-pack-sub (&optional category package subpackage)
+(defun php-doc-insert-cat-pack-sub (&optional category package subpackage column)
   "Inserts category, package, and subpackage if given."
   (let (inserted)
     (when (php-doc-insert-category category column)
@@ -473,7 +480,7 @@ arguments."
   "Grab the PHP doc file description.  If LONG then grab the long
 description."
   (save-excursion
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (when (re-search-forward
            (concat "\\*[[:space:]]*" ws-re
                    "*[[:space:]]*\\*[[:space:]]*[[:word:]]")
@@ -481,7 +488,7 @@ description."
       (backward-char)
       (let ((begin (point)))
         (re-search-forward "^[[:space:]]*\\*[[:space:]]*$")
-        (previous-line)
+        (forward-line -1)
         (end-of-line)
         (let ((description (buffer-substring-no-properties begin (point))))
           (when (or (<= (length description) 11)

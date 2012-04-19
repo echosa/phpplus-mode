@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 10-17-2011
-;; Last modified: Time-stamp: "2012-01-12 13:46:34 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:11:58 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -27,7 +27,8 @@
 ;; *********
 ;; FUNCTIONS
 ;; *********
-
+; delcarations for compiler
+(declare-function zf-mode "zf-mode")
 (defun php-remove-this-concat (&optional digest-variables)
   "Remove the concatenation character at point if it exists and
 it is proper to do so.  Will not join strings of unlike
@@ -553,20 +554,20 @@ comment out the current statement."
                   end
                   (current-point (point))
                   (last-line (save-excursion
-                               (end-of-buffer)
+                               (goto-char (point-max))
                                (line-number-at-pos))))
               (while (and (php-parse-current 'comment)
                           (< 1 (line-number-at-pos)))
                 (beginning-of-line-text 0))
               (unless (php-parse-current 'comment)
-                (next-line))
+                (forward-line))
               (beginning-of-line-text)
               (setq begin (line-beginning-position))
               (while (and (php-parse-current 'comment)
                           (< (line-number-at-pos) last-line))
                 (beginning-of-line-text 2))
               (unless (php-parse-current 'comment)
-                (previous-line))
+                (forward-line -1))
               (end-of-line)
               (setq end (point))
               (let ((sub (buffer-substring begin end)))
@@ -601,7 +602,8 @@ comment out the current statement."
               (php-skip-this-statement)
               (exchange-point-and-mark)
               (comment-dwim current-prefix-arg))))))
-    (goto-line line)
+    (goto-char (point-min))
+    (forward-line (1- line))
     (beginning-of-line)
     (forward-char column)))
 

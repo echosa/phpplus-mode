@@ -2,7 +2,7 @@
 
 ;; Version: 3.0
 ;; Created: 6-15-2009
-;; Last modified: Time-stamp: "2011-09-13 14:54:57 bzwahr"
+;; Last modified: Time-stamp: "2012-04-19 16:13:36 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -37,7 +37,7 @@
 ;;; ************
 ;;; Requirements
 ;;; ************
-
+(require 'etags)
 (require 'php-project)
 (require 'php-funcs)
 

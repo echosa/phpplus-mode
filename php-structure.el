@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 10-03-2011
-;; Last modified: Time-stamp: "2012-03-27 15:45:50 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:13:14 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -21,8 +21,9 @@
 ;; ************
 ;; REQUIREMENTS
 ;; ************
-
+(require 'cl)
 (require 'php-parse)
+(require 'zf-utils)
 
 ;; *********
 ;; VARIABLES

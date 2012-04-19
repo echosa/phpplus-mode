@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 08-08-2011
-;; Last modified: Time-stamp: "2011-08-08 15:35:07 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:09:11 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -19,7 +19,7 @@
 ;; ************
 ;; REQUIREMENTS
 ;; ************
-
+(require 'php-edit)
 (require 'php-format)
 (require 'php-parse)
 (require 'string-utils)

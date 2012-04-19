@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-04-19 09:20:53 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:30:46 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Brian Zwahr <echosa@gmail.com>
@@ -49,6 +49,8 @@
 ;;; ************
 ;;; REQUIREMENTS
 ;;; ************
+(require 'cl)
+
 ;; pulled from php-mode
 (require 'font-lock)
 (require 'cc-mode)
@@ -1642,7 +1644,7 @@ including unittests or bundled packages."
   (set (make-local-variable 'c-block-stmt-2-key) php-block-stmt-2-key)
   (set (make-local-variable 'c-doc-comment-style)
        '((zf-mode . javadoc)))
-  (set (make-local-variable 'c-class-key) php-class-key)
+;  (set (make-local-variable 'c-class-key) php-class-key)
 
   (zf-setup-font-locking)
 

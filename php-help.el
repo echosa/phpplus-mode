@@ -45,8 +45,7 @@ You can replace \"en\" with your ISO language code."
   (let* ((tagname (php-get-pattern))
          (buf (find-tag-noselect tagname nil nil))
          arglist)
-    (save-excursion
-      (set-buffer buf)
+    (with-current-buffer buf
       (goto-char (point-min))
       (when (re-search-forward
              (format "function\\s-+%s\\s-*(\\([^{]*\\))" tagname)

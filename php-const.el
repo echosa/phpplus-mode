@@ -28,12 +28,12 @@
 
 (defconst php-class-decl-kwds '("class" "interface"))
 
-(defconst php-class-key
-  (concat
-   "\\(" (regexp-opt php-class-decl-kwds) "\\)\\s-+"
-   (c-lang-const c-symbol-key c)                ;; Class name.
-   "\\(\\s-+extends\\s-+" (c-lang-const c-symbol-key c) "\\)?" ;; Name of superclass.
-   "\\(\\s-+implements\\s-+[^{]+{\\)?")) ;; List of any adopted protocols.
+;; (defconst php-class-key
+;;   (concat
+;;    "\\(" (regexp-opt php-class-decl-kwds) "\\)\\s-+"
+;;    (c-lang-const c-symbol-key c)                ;; Class name.
+;;    "\\(\\s-+extends\\s-+" (c-lang-const c-symbol-key c) "\\)?" ;; Name of superclass.
+;;    "\\(\\s-+implements\\s-+[^{]+{\\)?")) ;; List of any adopted protocols.
 
 (defconst php-constants
   (eval-when-compile

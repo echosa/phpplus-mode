@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 11-01-2011
-;; Last modified: Time-stamp: "2011-11-11 15:36:47 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 15:54:00 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -21,12 +21,13 @@
 ;; REQUIREMENTS
 ;; ************
 (require 'php-parse)
+(require 'php-format)
+(require 'php-funcs)
 (require 'php-structure)
 
 ;; *********
 ;; FUNCTIONS
 ;; *********
-
 (defun php-mark-current (&optional type)
   "Put point at beginning and mark at end of current structure.
 Optionally force TYPE of structure.  You probably should not use
@@ -153,6 +154,9 @@ as well."
         (newline)
         (newline-and-indent)
         (setq end (point))))))
+
+; defined for compiler
+(defvar zf-mode-delete-trailing-whitespace)
 
 (defun php-format-spacing (&optional no-indent-all-lines)
   "Formats the spacing in the current class/interface according

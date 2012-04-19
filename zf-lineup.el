@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 11-23-2011
-;; Last modified: Time-stamp: "2012-04-19 09:20:57 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 16:28:37 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -20,7 +20,8 @@
 ;; ************
 ;; REQUIREMENTS
 ;; ************
-
+(require 'cc-defs)
+(require 'cc-align)
 (require 'php-structure)
 
 ;; *********

@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 9-28-2011
-;; Last modified: Time-stamp: "2012-03-23 17:05:35 bzwahr"
+;; Last modified: Time-stamp: "2012-04-19 16:30:32 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Brian Zwahr <echosa@gmail.com>
@@ -59,6 +59,14 @@ hidden/shown blocks."
   "Whether or not to enable wrap-region."
   :type 'boolean
   :group 'zf-mode-extras)
+
+;; *********
+;; FUNCTIONS
+;; *********
+; declarations for compiler
+(defvar zf-mode-map)
+(declare-function php-electric-mode "php-electric")
+(declare-function camelCase-mode "camelCase")
 
 (defun zf-mode-load-extras ()
   "Load any extras that are enabled."

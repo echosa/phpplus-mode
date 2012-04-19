@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2011-11-18 10:45:45 bzwahr"
+;; Last modified: Time-stamp: "2012-04-19 16:08:34 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -41,6 +41,11 @@
 
 ;; *************************************************************************
 
+;; ************
+;; REQUIREMENTS
+;; ************
+(require 'dired)
+
 ;; ******
 ;; CUSTOM
 ;; ******
@@ -78,6 +83,17 @@ name for the project's tag file."
                        (string :tag "Subpackage"))
                  (string :tag "Zend Framework Global Namespace")
                  (string :tag "Zend Framework Default Module"))))
+
+; variable declarations for compiler
+(defvar php-doc-default-author)
+(defvar php-doc-default-copyright)
+(defvar php-doc-default-license)
+(defvar php-doc-default-version)
+(defvar php-doc-default-php-version)
+(defvar php-doc-default-link)
+(defvar php-doc-default-category)
+(defvar php-doc-default-package)
+(defvar php-doc-default-subpackage)
 
 ;; *********
 ;; FUNCTIONS
@@ -282,7 +298,7 @@ FILE-MATCH should be a regexp must match."
   (let ((b (current-buffer)))
     (find-grep-dired (php-project-directory) old)
     (while (not (looking-at-p "  find finished"))
-      (end-of-buffer)
+      (goto-char (point-min))
       (beginning-of-line 0)
       (sit-for 1))
     (if (dired-mark-files-regexp file-match)

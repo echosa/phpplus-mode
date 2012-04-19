@@ -2,7 +2,7 @@
 
 ;; Vrsion: 1.0
 ;; Created: 7-5-2011
-;; Last modified: Time-stamp: "2012-02-20 13:10:51 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 15:31:34 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -58,9 +58,15 @@
 (defvar php-completion-hash-local nil
   "Cache for local-retrieved completion candidates.")
 
+;; defvar these to hush the compiler
+(defvar php-manual-path)
+(defvar php-manual-url)
+
 ;; *********
 ;; FUNCTIONS
 ;; *********
+; compiler definitions
+(declare-function company-grab-symbol "company.el")
 
 (defun php-completion-read-class/interface (type)
   (let ((type-string (symbol-name type)))
@@ -159,7 +165,7 @@
                   (while (re-search-forward ">\\([^<]+\\)</a>" end t)
                     (puthash (match-string 1) t hash))
                   (setq php-completion-hash-remote hash)))))))
-  php-completion-remote-hash)
+  php-completion-hash-remote)
 
 (defun php-completion-lookup (keyword)
   "Lookup meta-info for a PHP keyword."

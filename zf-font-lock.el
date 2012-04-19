@@ -500,7 +500,7 @@
                                       (point-max))))
                 (put-text-property comment-begin comment-end 'face 
                                    'font-lock-comment-face)))))))
-    nil))
+    nil)
  
 (defun zf-syntactic-face-function-process-css ()
   (when verbose

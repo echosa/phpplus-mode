@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-04-17 08:48:56 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 09:20:56 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -323,7 +323,7 @@ everything IN-BUFFER."
                             (zf-mode)
                             (insert "<?php")
                             (newline)
-                            (dotimes (i (/ begin-column c-basic-offset))
+                            (dotimes (i (/ begin-column zf-basic-offset))
                               (indent-according-to-mode)
                               (insert "if ($test) {\n"))
                             (indent-according-to-mode)
@@ -1398,7 +1398,7 @@ short-tags with their equivalents."
                             php-block-stmt-2-key "\\)"))
         (statement-re (concat "\\(\\(?:include\\|require\\)\\(?:_once\\)?\\)"
                               "\\s-*(\\([^)]*?\\))\\s-*;")))
-    (dolist (pair `(("\t" ,(make-string c-basic-offset ?\ ))
+    (dolist (pair `(("\t" ,(make-string zf-basic-offset ?\ ))
                     ("<\\?=" "<?php echo")
                     ("<\\?[^p]\\s-*" "<?php ")
                     ("\\([^\n[:space:];{]\\)\\s-*\\?>" "\\1; ?>")

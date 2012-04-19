@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-03-22 15:18:49 mdwyer"
+;; Last modified: Time-stamp: "2012-04-19 09:20:53 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Brian Zwahr <echosa@gmail.com>
@@ -1670,7 +1670,7 @@ including unittests or bundled packages."
   ;; PULLED FROM PREVIOUS zf-mode-hook
   (turn-on-font-lock)
   ;;(setq php-mode-force-pear t)
-  (setq c-basic-offset 4)
+  ;; (setq c-basic-offset 4)
   (c-set-offset 'cpp-macro 'zf-cpp-macro-lineup)
   (c-set-offset 'arglist-intro 'zf-arglist-intro-lineup)
   (c-set-offset 'arglist-close 'zf-arglist-close-lineup)

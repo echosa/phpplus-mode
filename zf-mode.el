@@ -1,8 +1,8 @@
-;;; zf-mode.el
+;;; zf-mode.el --- A better PHP mode with Zend Framework 1 support.
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-04-19 16:30:46 bzwahr"
+;; Last modified: Time-stamp: "2012-04-23 14:01:57 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Brian Zwahr <echosa@gmail.com>
@@ -21,9 +21,6 @@
 ;;; *****
 
 ;; (add-to-list 'load-path "/path/to/zf-mode/")
-;; (add-to-list 'load-path "/path/to/zf-mode/bundled")
-
-;; Requires (and is bundled with) php-mode.
 
 ;; Optional packages supported:
 ;; camelCase
@@ -42,7 +39,6 @@
 ;; Keybindings:
 ;; The ZF menu can be used to call most functions.
 ;; Use C-h m from a zf-mode buffer to view the keybindings.
-;; Look for the zf minor mode section.
 
 ;; *************************************************************************
 
@@ -1709,3 +1705,5 @@ including unittests or bundled packages."
   :group 'zf-mode)
 
 (provide 'zf-mode)
+
+;;; zf-mode.el ends here

@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-04-19 16:28:08 bzwahr"
+;; Last modified: Time-stamp: "2012-04-23 13:58:23 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -472,7 +472,7 @@ point is currently in."
   (let ((current-buffer (buffer-name))
         start)
     (pop-to-buffer "*compilation*" nil t)
-    (let ((inhibit-read-only nil))
+    (let ((inhibit-read-only t))
       (re-search-forward "EXIT_STATUS")
       (beginning-of-line)
       (delete-region (point) (line-end-position 2)))

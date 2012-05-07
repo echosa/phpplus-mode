@@ -33,8 +33,15 @@ installed as well.
 INSTALL
 
 Ensure that all required modes and elisp files are on the load path and loaded.
-Also ensure that zf-mode's elisp files are on the load path and loaded.
-Put this in your .emacs file:
+Also ensure that zf-mode's elisp files are on the load path and loaded.  The
+easiest way to obtain zf-mode is through package.el, which is included in Emacs
+24, but can be obtained for Emacs 23. Add the melpa repoitory to your package
+repositores list (instructions can be found at
+http://melpa.milkbox.net/#installing).  Otherwise, you can get zf-mode straight
+from github at https://github.com/echosa/zf-mode. This is recommended for anyone
+who wants to help develop zf-mode or contribute changes/fixes.
+
+Once you have donwloaded and installed zf-mode, put this in your .emacs file:
 
 (require 'zf-mode)
 (zf-mode-setup)

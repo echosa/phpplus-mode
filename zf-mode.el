@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-04-23 14:01:57 bzwahr"
+;; Last modified: Time-stamp: "2012-05-07 09:52:54 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Brian Zwahr <echosa@gmail.com>
@@ -39,6 +39,9 @@
 ;; Keybindings:
 ;; The ZF menu can be used to call most functions.
 ;; Use C-h m from a zf-mode buffer to view the keybindings.
+
+;; View the README for more details. It can be found at
+;; https://github.com/echosa/zf-mode
 
 ;; *************************************************************************
 

@@ -2,7 +2,7 @@
 
 ;; Version: 3.0
 ;; Created: 6-15-2009
-;; Last modified: Time-stamp: "2012-04-19 16:13:36 bzwahr"
+;; Last modified: Time-stamp: "2012-05-07 09:44:02 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -133,16 +133,18 @@ is saved in 'php-tags-directory', which can be set in customize."
     (message cmd)
     (make-directory (convert-standard-filename (file-name-directory file)) t)
     (message "Creating tags file: %s" file)
-    (shell-command cmd)
-    (message "Created tags file: %s" file)
-    (when (y-or-n-p 
-           (concat "Would you like to load the newly created tags file "
-                   file " ? "))
-      (setq tags-completion-table nil)
-      (let ((tags-buffer (or (file-name-nondirectory file) "TAGS")))
-        (when (get-buffer tags-buffer)
-          (kill-buffer tags-buffer)))
-      (visit-tags-table file))))
+    (if (eq 0 (shell-command cmd))
+        (progn
+          (message "Created tags file: %s" file)
+          (when (y-or-n-p 
+                 (concat "Would you like to load the newly created tags file "
+                         file " ? "))
+            (setq tags-completion-table nil)
+            (let ((tags-buffer (or (file-name-nondirectory file) "TAGS")))
+              (when (get-buffer tags-buffer)
+                (kill-buffer tags-buffer)))
+            (visit-tags-table file)))
+      (message "Tags creation failed. Check *Shell Command Output* buffer."))))
 
 (defun php-create-tag-file (add-dirs)
   (interactive "P")

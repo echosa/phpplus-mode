@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-07 09:52:54 bzwahr"
+;; Last modified: Time-stamp: "2012-05-07 10:47:29 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Brian Zwahr <echosa@gmail.com>
@@ -1070,8 +1070,7 @@ first."
   "Prepares emacs for zf-mode."
   (add-to-list 'load-path
 	       (convert-standard-filename
-		(concat (file-name-directory (find-lisp-object-file-name
-					      'zf-mode 'function))
+		(concat (file-name-directory (locate-library "zf-mode.el"))
 			"bundled/")))
   ;; (require 'php-mode)
 

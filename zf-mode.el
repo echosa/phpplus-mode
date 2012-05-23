@@ -2,7 +2,7 @@
 
 ;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-23 11:20:37 bzwahr"
+;; Last modified: Time-stamp: "2012-05-23 11:27:15 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -1060,8 +1060,7 @@ first."
   "Prepares emacs for zf-mode."
   (add-to-list 'load-path
 	       (convert-standard-filename
-		(concat (file-name-directory (find-lisp-object-file-name
-					      'zf-mode 'function))
+		(concat (file-name-directory (locate-library "zf-mode.el"))
 			"bundled/")))
   ;; (require 'php-mode)
 
@@ -1087,9 +1086,8 @@ zf-mode source code file buffers. "
     (dolist (file (remove-if
                    (lambda (x) (string-match "/\\." x))
                    (file-expand-wildcards
-                    (concat (file-name-directory (find-lisp-object-file-name 
-                                                  'zf-mode 'function)) subdir
-                            "*.el"))))
+                    (concat (file-name-directory (locate-library "zf-mode.el")) 
+                            subdir "*.el"))))
       (load-file file)))
   (let ((rb (current-buffer)))
     (dolist (b (buffer-list))

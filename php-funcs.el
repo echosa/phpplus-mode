@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2012-04-19 16:01:03 bzwahr"
+;; Last modified: Time-stamp: "2012-05-23 11:05:37 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -137,6 +137,12 @@ FORCE-DOC-BLOCKS.  This requires hideshow."
                 (if show
                     (hs-show-block)
                   (hs-hide-block))))))))))
+
+(defun php-show-all ()
+  "This is just a wrapper around hideshow's hs-show-all.
+We have this wrapper to make sure that hide-show is loaded first."
+  (when (fboundp 'hs-show-all)
+    (hs-show-all)))
 
 (defun php-get-named-things (&optional types)
   "Returns a list of parses of all named things in the current

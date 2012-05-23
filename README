@@ -8,26 +8,24 @@ This means that for packages I do not maintain, if you use the ones I provide,
 they may not be the latest version, but should work with zf-mode.
 
 The currently bundled packages that I do not maintain are:
- - camelCase.el
  - php-electric.el
 
 ===============================================================================
 REQUIREMENTS
 
 zf-mode comes with pretty much everything neccesary to run it.  Emacs version 
-23 or later is recommended.  There are some optional packages which have 
-support within zf-mode, but which are not bundled with zf-mode itself, 
-including
- - company-mode
- - wrap-region
- - hideshowvis (hideshow is included with emacs 23 typically)
+23 or later is recommended.
 
 Note that there is a known issue with company-mode version 0.5, or at least
 with the version available from elpa.  See the INSTALL section for details.
 
-Your system needs to have at least PHP installed on it (of course), and to use
+For php-test, your system needs to have PHP installed on it for linting, and to use
 any of the testing programs (phpunit, phpcs, phpmd), you need to have those
 installed as well.
+
+If you would like electric functionality (for instance, when you type ( the
+matching ) is added for you, etc), you can use php-electric-mode, which at the
+time of this writing can be found at http://stcamp.net/share/php-electric.el
 
 ===============================================================================
 INSTALL
@@ -97,7 +95,6 @@ each of the customize groups with `M-x customize-group`:
  - php-tags
  - php-test
  - zf-mode
- - zf-mode-extras
 
 ***********
 EXECUTABLES

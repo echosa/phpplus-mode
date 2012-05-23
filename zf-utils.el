@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 2011-07-19
-;; Last modified: Time-stamp: "2012-04-19 16:31:30 bzwahr"
+;; Last modified: Time-stamp: "2012-05-23 11:06:08 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -75,7 +75,7 @@ applicable members of a list."
   (if (fboundp func)
       (global-set-key key-cmd func)))
 
-(defun hs-goto-line (line)
+(defun zf-goto-line (line)
   "Goes to the given line, expanding the code if its hidden by hide-show."
   (interactive "nGoto Line: ")
   (goto-char (point-min))
@@ -85,7 +85,5 @@ applicable members of a list."
     (hs-show-block)
     (goto-char (point-min))
     (forward-line (1- line))))
-
-(bind-key-if-fboundp (kbd "s-l") 'hs-goto-line)
 
 (provide 'zf-utils)

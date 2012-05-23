@@ -10,7 +10,6 @@
   "Macro to setup a zf-mode breaking unit test"
   `(let (test-buffer-string
          correct-buffer-string
-         zf-mode-hideshow-hide-on-load
          php-format-break-all-method-chain-links
          zf-verbose)
      (with-temp-buffer

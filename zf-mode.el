@@ -1,10 +1,11 @@
 ;;; zf-mode.el --- A better PHP mode with Zend Framework 1 support.
 
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-07 09:52:54 bzwahr"
+;; Last modified: Time-stamp: "2012-05-23 11:20:37 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
+;; Michael Dwyer <mdwyer@ehtech.in>
 ;; Brian Zwahr <echosa@gmail.com>
 
 ;; *************************************************************************
@@ -20,19 +21,9 @@
 ;;; Usage
 ;;; *****
 
-;; (add-to-list 'load-path "/path/to/zf-mode/")
-
-;; Optional packages supported:
-;; camelCase
-;; company
-;; hideshow
-;; php-electric
-;; wrap-region
-
 ;; Installation:
-;; Ensure that the zf-mode files and all requirements are in your emacs
-;; load path and loaded.
 ;; Place the following in your .emacs setup:
+;; (add-to-list 'load-path "/path/to/zf-mode/")
 ;; (require 'zf-mode)
 ;; (zf-mode-setup)
 
@@ -72,7 +63,6 @@
 (require 'string-utils)
 (require 'zf-font-lock)
 (require 'zf-lineup)
-(require 'zf-mode-extras)
 (require 'zf-utils)
 
 ;;; *********
@@ -1218,8 +1208,9 @@ including unittests or bundled packages."
   (define-key zf-mode-map "\M-;" 'php-comment-dwim)
   (define-key zf-mode-map [(super ?\[)] 'php-hide-innards)
   (define-key zf-mode-map [(super ?\{)] 'php-hide-class/interface-doc-blocks)
-  (define-key zf-mode-map [(super ?\])] 'hs-show-all)
+  (define-key zf-mode-map [(super ?\])] 'php-show-all)
   (define-key zf-mode-map [(super ?\})] 'php-show-class/interface-doc-blocks)
+  (define-key zf-mode-map [(super ?\l)] 'zf-goto-line)
   ;; pulled from php-mode
   (define-key zf-mode-map "\C-c\C-f" 'php-search-documentation)
   (define-key zf-mode-map "\C-c\C-m" 'php-browse-manual)
@@ -1696,10 +1687,7 @@ including unittests or bundled packages."
   (add-hook 'before-save-hook 'zf-mode-delete-all-trailing-whitespace nil t)
   (add-hook 'after-save-hook 'zf-mode-compile-on-save nil t)
   (load-tags)
-  (zf-mode-load-extras)
-  
   (php-text-struct-cache-initialize)
-
   (run-hooks 'zf-mode-hook))
 
 (defcustom zf-mode-hook nil

@@ -1,16 +1,5 @@
 zf-mode README
 ===============================================================================
-DISCLAIMERS
-
-Although at this time I provide some packages and elisp files needed for 
-zf-mode, please note that I did not write, nor do I maintain, all of them.
-This means that for packages I do not maintain, if you use the ones I provide, 
-they may not be the latest version, but should work with zf-mode.
-
-The currently bundled packages that I do not maintain are:
- - php-electric.el
-
-===============================================================================
 REQUIREMENTS
 
 zf-mode comes with pretty much everything neccesary to run it.  Emacs version 

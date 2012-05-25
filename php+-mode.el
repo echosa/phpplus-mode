@@ -2,7 +2,7 @@
 
 ;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-25 13:05:53 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 13:22:55 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -69,6 +69,18 @@
 (defgroup php+-mode nil
   "Customizations for php+-mode."
   :group 'languages)
+
+(defcustom php-file-patterns '("\\.php[s34]?\\'" "\\.phtml\\'" "\\.inc\\'")
+ "List of file patterns for which to automatically invoke `php+-mode'."
+ :type '(repeat (regexp :tag "Pattern"))
+ :set (lambda (sym val)
+        (set-default sym val)
+        (let ((php-file-patterns-temp val))
+          (while php-file-patterns-temp
+            (add-to-list 'auto-mode-alist
+                         (cons (car php-file-patterns-temp) 'php+-mode))
+            (setq php-file-patterns-temp (cdr php-file-patterns-temp)))))
+ :group 'php+-mode)
 
 (defcustom php+-default-face 'default
   "Default face in `php+-mode' buffers."
@@ -222,7 +234,7 @@ including unittests or bundled packages."
   (define-key php+-mode-map "\C-cl" 'align-on)
   (define-key php+-mode-map "\C-cs" 'php-combine-scripts)
   (define-key php+-mode-map "\C-c'" 'php-change-string-quotes)
-  (define-key php+-mode-map "\C-c\M-'" 'php+-force-string-quotes-statement)
+  (define-key php+-mode-map "\C-c\M-'" 'php-force-string-quotes-statement)
   (define-key php+-mode-map "\C-c(" 'php-find-current-sexp-begin)
   (define-key php+-mode-map "\C-c)" 'php-find-current-sexp-end)
   (define-key php+-mode-map "\C-c<" 'php-goto-start-of-script/html)
@@ -288,7 +300,7 @@ including unittests or bundled packages."
   (define-key php+-mode-map [(super ?\{)] 'php-hide-class/interface-doc-blocks)
   (define-key php+-mode-map [(super ?\])] 'php-show-all)
   (define-key php+-mode-map [(super ?\})] 'php-show-class/interface-doc-blocks)
-  (define-key php+-mode-map [(super ?\l)] 'php+-goto-line)
+  (define-key php+-mode-map [(super ?\l)] 'php-goto-line)
   (define-key php+-mode-map "\C-c\C-f" 'php-search-documentation)
 )
 
@@ -705,7 +717,7 @@ including unittests or bundled packages."
   (set (make-local-variable 'c-doc-comment-style)
        '((php+-mode . javadoc)))
 
-  (php+-setup-font-locking)
+  (php-setup-font-locking)
 
   ;; Do not force newline at end of file.  Such newlines can cause
   ;; trouble if the PHP file is included in another file before calls
@@ -716,23 +728,23 @@ including unittests or bundled packages."
   (setq c-special-indent-hook nil)
 
   (turn-on-font-lock)
-  (c-set-offset 'cpp-macro 'php+-cpp-macro-lineup)
-  (c-set-offset 'arglist-intro 'php+-arglist-intro-lineup)
-  (c-set-offset 'arglist-close 'php+-arglist-close-lineup)
+  (c-set-offset 'cpp-macro 'php-cpp-macro-lineup)
+  (c-set-offset 'arglist-intro 'php-arglist-intro-lineup)
+  (c-set-offset 'arglist-close 'php-arglist-close-lineup)
   (c-set-offset 'arglist-cont-nonempty '+)
-  (c-set-offset 'knr-argdecl 'php+-knr-argdecl-lineup)
-  (c-set-offset 'knr-argdecl-intro 'php+-knr-argdecl-lineup)
-  (c-set-offset 'topmost-intro 'php+-topmost-intro-lineup)
-  (c-set-offset 'topmost-intro-cont 'php+-topmost-intro-cont-lineup)
-  (c-set-offset 'c 'php+-comment-lineup)
-  (c-set-offset 'comment-intro 'php+-comment-intro-lineup)
-  (c-set-offset 'defun-close 'php+-defun-close-lineup)
-  (c-set-offset 'statement 'php+-statement-lineup)
-  (c-set-offset 'statement-cont 'php+-statement-cont-lineup)
-  (c-set-offset 'string 'php+-string-lineup)
-  (c-set-offset 'brace-list-intro 'php+-brace-list-intro-lineup)
-  (c-set-offset 'brace-list-entry 'php+-brace-list-entry-lineup)
-  (c-set-offset 'brace-list-close 'php+-brace-list-close-lineup)
+  (c-set-offset 'knr-argdecl 'php-knr-argdecl-lineup)
+  (c-set-offset 'knr-argdecl-intro 'php-knr-argdecl-lineup)
+  (c-set-offset 'topmost-intro 'php-topmost-intro-lineup)
+  (c-set-offset 'topmost-intro-cont 'php-topmost-intro-cont-lineup)
+  (c-set-offset 'c 'php-comment-lineup)
+  (c-set-offset 'comment-intro 'php-comment-intro-lineup)
+  (c-set-offset 'defun-close 'php-defun-close-lineup)
+  (c-set-offset 'statement 'php-statement-lineup)
+  (c-set-offset 'statement-cont 'php-statement-cont-lineup)
+  (c-set-offset 'string 'php-string-lineup)
+  (c-set-offset 'brace-list-intro 'php-brace-list-intro-lineup)
+  (c-set-offset 'brace-list-entry 'php-brace-list-entry-lineup)
+  (c-set-offset 'brace-list-close 'php-brace-list-close-lineup)
 
   (when (and php+-mode-show-trailing-whitespace
              (boundp 'show-trailing-whitespace))

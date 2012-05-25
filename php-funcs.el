@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2012-05-25 12:53:21 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 14:37:43 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -1055,10 +1055,13 @@ directory."
   "Either indent according to mode, or expand the word preceding
 point."
   (interactive "*P")
-  (if (and (or (bobp) (= ?w (char-syntax (char-before))))
-           (or (eobp) (not (= ?w (char-syntax (char-after))))))
-      (dabbrev-expand arg)
-    (indent-according-to-mode)))
+  (let ((yas/also-auto-indent-first-line t)
+        (yas/fallback-behavior 'return-nil))
+    (unless (yas/expand)
+      (if (and (or (bobp) (= ?w (char-syntax (char-before))))
+               (or (eobp) (not (= ?w (char-syntax (char-after))))))
+          (dabbrev-expand arg)
+        (indent-according-to-mode)))))
 
 (defun php-is-a-constant-p (value &optional do-not-ask)
   "This function tries to determine if the value is the name of a

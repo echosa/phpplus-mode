@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: func
+# key: func
+# binding: C-c C-v
+# --
+/**
+ * ${2:$(php-yas-camelCase2words yas/text)}
+ * ${3:$(php-yas-param-doc yas/text)}
+ * @author ${1:$(php-doc-get-author)}
+ *
+ * @return ${4:$$(unless yas/modified-p (php-yas-return))}
+ */
+${1:$$(unless yas/modified-p (php-yas-function-visibility))}function ${2:myFunc}(${3:})
+{
+    $0
+}

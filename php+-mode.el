@@ -2,7 +2,7 @@
 
 ;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-25 13:22:55 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 14:39:19 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -55,6 +55,7 @@
 (require 'php-parse)
 (require 'php-project)
 (require 'php-refactor)
+(require 'php-snippets)
 (require 'php-string)
 (require 'php-structure)
 (require 'php-tags)

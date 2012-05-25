@@ -65,10 +65,6 @@ merged backends section of company-backends called `company-my-php-backend`.
 This backend will check the php.net documentation for completions of php
 keywords and such.
 
-Also included is a custom ruleset for phpcs, called ZFMode. You are welcome to
-use this, if you wish. In order to do so, either copy or symlink the ZFMode
-directly in the main directory to where ever your phpcs rulesets are.
-
 ===============================================================================
 CONFIGURATION
 

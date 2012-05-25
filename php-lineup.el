@@ -1,8 +1,8 @@
-;;; zf-lineup.el --- Functions that deal with PHP indentation
+;;; php-lineup.el --- Functions that deal with PHP indentation
 
 ;; Version: 1.0
 ;; Created: 11-23-2011
-;; Last modified: Time-stamp: "2012-04-19 16:28:37 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; zf-lineup.el is a part of the zf-mode suite and contains functions
+;; php-lineup.el is a part of the php+-mode suite and contains functions
 ;; that are used by the c-mode indentation engine
 ;; (indent-according-to-mode et. al.).
 
@@ -28,42 +28,42 @@
 ;; CUSTOMIZE
 ;; *********
 
-(defcustom zf-basic-offset 4
+(defcustom php-basic-offset 4
   "This is the default indentation for PHP lines."
   :type 'integer
-  :group 'zf-mode)
+  :group 'php+-mode)
 
-(defcustom zf-html-basic-offset (/ zf-basic-offset 2)
+(defcustom php-html-basic-offset (/ php-basic-offset 2)
   "This is the default indentation for HTML elements"
   :type 'integer
-  :group 'zf-mode)
+  :group 'php+-mode)
 
 ;; *********
 ;; FUNCTIONS
 ;; *********
 
-(defun zf-cpp-macro-lineup (element)
+(defun php-cpp-macro-lineup (element)
   "This lineup function handles cpp-macro elements."
   (save-excursion
     (beginning-of-line-text)
     (make-vector 1 (or (when (looking-at-p "\\?>")
                          (* (php-get-current-sexp-level "{") 
-                            zf-basic-offset))
+                            php-basic-offset))
                        0))))
 
-(defun zf-arglist-intro-lineup (element)
+(defun php-arglist-intro-lineup (element)
   "This lineup function handles arglist-intro elements."
   (make-vector 1 (save-excursion 
                    (goto-char (c-langelem-pos element))
-                   (+ zf-basic-offset (current-column)))))
+                   (+ php-basic-offset (current-column)))))
 
-(defun zf-arglist-close-lineup (element)
+(defun php-arglist-close-lineup (element)
   "This lineup function handles arglist-close elements."
   (make-vector 1 (save-excursion 
                    (goto-char (c-langelem-pos element))
                    (current-column))))
 
-(defun zf-knr-argdecl-lineup (element)
+(defun php-knr-argdecl-lineup (element)
   "This lineup function handles knr-argdecl elements."
   (let* ((statement-begin (or (php-in-statementp)
                               (save-excursion
@@ -80,15 +80,15 @@
                               (> (line-number-at-pos) 
                                  (second statement-begin-col/line)))))
     (make-vector 1 (+ statement-begin-col 
-                      (if statement-cont zf-basic-offset 0)))))
+                      (if statement-cont php-basic-offset 0)))))
     
-(defun zf-topmost-intro-lineup (element)
+(defun php-topmost-intro-lineup (element)
   "This lineup function handles topmost intro elements."
   (save-excursion
     (goto-char (c-langelem-pos element))
     (if (looking-at-p "break;") '+ 0)))
 
-(defun zf-topmost-intro-cont-lineup (element)
+(defun php-topmost-intro-cont-lineup (element)
   "This lineup function handles topmost intro cont elements."
   (save-excursion
     (beginning-of-line)
@@ -111,7 +111,7 @@
                      0)))
         (make-vector 1 col)))))
 
-(defun zf-comment-intro-lineup (element)
+(defun php-comment-intro-lineup (element)
   "This lineup function handles comment intros."
   (save-excursion
     (let ((comment-begin (php-in-commentp)))
@@ -126,9 +126,9 @@
         (or (looking-at-p "}")
             (goto-char (php-in-statementp)))
         (make-vector 1 (+ (current-column)
-                          (if in-brace zf-basic-offset 0)))))))
+                          (if in-brace php-basic-offset 0)))))))
 
-(defun zf-comment-lineup (element)
+(defun php-comment-lineup (element)
   "This lineup function handles bare HTML and docs (which are
 syntax classed as comments."
   (save-excursion
@@ -160,12 +160,12 @@ syntax classed as comments."
                 (t (if (looking-back-p (concat doc-begin-tag-re ws-re "*"))
                        (make-vector 1 0)
                      (let ((min-col (* (php-get-current-sexp-level "{") 
-                                       zf-basic-offset)))
+                                       php-basic-offset)))
                        (make-vector 1 
                                     (max min-col 
-                                         (zf-comment-lineup-calc-col))))))))))))
+                                         (php-comment-lineup-calc-col))))))))))))
 
-(defun zf-comment-lineup-calc-col ()
+(defun php-comment-lineup-calc-col ()
   (save-match-data
     (let* ((tagp (looking-at "<\\(/?\\)\\(\\(?:\\sw\\|-\\)+\\)"))
            (end-tagp 
@@ -177,7 +177,7 @@ syntax classed as comments."
               "<\\(/?\\)\\(\\(?:\\sw\\|-\\)+\\)"))
            (end-tag-num (if (or end-tagp (not tagp)) -1 0))
            (matching-tag-col
-            (zf-comment-lineup-matching-tag-col))
+            (php-comment-lineup-matching-tag-col))
            (matching-tag-name 
             (downcase (match-string-no-properties 2)))
            (matching-tag-endp 
@@ -195,14 +195,14 @@ syntax classed as comments."
                               (save-excursion
                                 (when (re-search-backward ">\\|<script" nil t)
                                   (string= (match-string 0) ">"))))
-                         zf-basic-offset
-                       zf-html-basic-offset)))
+                         php-basic-offset
+                       php-html-basic-offset)))
               (save-excursion
                 (beginning-of-line-text 0)
                 (current-column)))))
       tag-col)))
 
-(defun zf-comment-lineup-matching-tag-col ()
+(defun php-comment-lineup-matching-tag-col ()
   (or (save-excursion
         (catch 'found
           (while (re-search-backward matching-tag-col-re nil t)
@@ -210,12 +210,12 @@ syntax classed as comments."
               (let ((tag (match-string-no-properties 2))
                     (tag-end-tagp 
                      (not (zerop (length (match-string-no-properties 1))))))
-                (zf-comment-lineup-set-end-tag-num)
+                (php-comment-lineup-set-end-tag-num)
                 (when (>= end-tag-num 0)
                   (throw 'found (current-column))))))))
       0))
 
-(defun zf-comment-lineup-set-end-tag-num ()
+(defun php-comment-lineup-set-end-tag-num ()
   (setf end-tag-num 
         (+ end-tag-num (if tag-end-tagp 
                            -1 
@@ -239,14 +239,14 @@ syntax classed as comments."
                   (t (throw 'found 
                             (char-equal (char-before (1- (point))) ?/))))))))))
 
-(defun zf-defun-close-lineup (element)
+(defun php-defun-close-lineup (element)
   "This lineup function handles defun close lineup."
   (save-excursion
     (goto-char (c-langelem-pos element))
     (beginning-of-line-text)
     (make-vector 1 (current-column))))
 
-(defun zf-statement-lineup (element)
+(defun php-statement-lineup (element)
   "This lineup function handles a bug in switch statement
 indentation."
   (save-excursion
@@ -259,9 +259,9 @@ indentation."
                (if (and (not (php-in-text-structp))
                         (looking-at-p "case"))
                    '+ 
-                 (make-vector 1 (* level zf-basic-offset))))))))
+                 (make-vector 1 (* level php-basic-offset))))))))
 
-(defun zf-statement-cont-lineup (element)
+(defun php-statement-cont-lineup (element)
   "This lineup function handles indentation for statements."
   (save-excursion
     (save-match-data
@@ -276,13 +276,13 @@ indentation."
              (re-search-backward "\\?>" nil t)
              (make-vector 1 (1- (current-column))))
             ((looking-back (concat "<\\?\\(php\\|=\\)?" ws-re "*")) 
-             (make-vector 1 (* zf-basic-offset 
+             (make-vector 1 (* php-basic-offset 
                                (php-get-current-sexp-level "{"))))
             (t (make-vector 1 (save-excursion
                                 (goto-char (php-in-statementp))
-                                (+ (current-column) zf-basic-offset))))))))
+                                (+ (current-column) php-basic-offset))))))))
 
-(defun zf-string-lineup (element)
+(defun php-string-lineup (element)
   "This lineup function handles indentation for strings."
   (save-excursion
     (make-vector 1 (or (let ((in-string (php-in-text-structp)))
@@ -291,14 +291,14 @@ indentation."
                            (current-column)))
                        (current-column)))))
 
-(defun zf-brace-list-intro-lineup (element)
+(defun php-brace-list-intro-lineup (element)
   "This lineup function handles indentation for brace list intros."
   (save-excursion
     (when (re-search-backward "\{" nil t)
       (beginning-of-line-text)
-      (make-vector 1 (+ zf-basic-offset (current-column))))))
+      (make-vector 1 (+ php-basic-offset (current-column))))))
 
-(defun zf-brace-list-entry-lineup (element)
+(defun php-brace-list-entry-lineup (element)
   "This lineup function handles indentation for brace list entries."
   (save-excursion
     (beginning-of-line)
@@ -314,10 +314,10 @@ indentation."
             (let ((break-statement (not (looking-at-p ";"))))
               (unless (looking-at-p "}")
                 (goto-char (php-in-statementp)))
-              (make-vector 1 (+ (if break-statement zf-basic-offset 0) 
+              (make-vector 1 (+ (if break-statement php-basic-offset 0) 
                                 (current-column))))))))))
 
-(defun zf-brace-list-close-lineup (element)
+(defun php-brace-list-close-lineup (element)
   "This lineup function handles indentation for brace list closes."
   (save-excursion
     (beginning-of-line)
@@ -327,4 +327,4 @@ indentation."
         (beginning-of-line-text)
         (make-vector 1 (current-column))))))
 
-(provide 'zf-lineup)
+(provide 'php-lineup)

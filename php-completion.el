@@ -2,7 +2,7 @@
 
 ;; Vrsion: 1.0
 ;; Created: 7-5-2011
-;; Last modified: Time-stamp: "2012-04-19 15:31:34 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:36:49 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,15 +11,12 @@
 ;;; About
 ;;; *****
 
-;; php-completion.el is a part of the zf-mode suite and is used to
+;; php-completion.el is a part of the php+-mode suite and is used to
 ;; provide functionality to company-mode and other similar utilities.
 
 ;;; *****
 ;;; Usage
 ;;; *****
-
-;; Requirements:
-;; php-mode
 
 ;; Use customize to set php-manual-path and/or php-manual-url.
 ;;
@@ -86,7 +83,7 @@
   "Company-mode backend for PHP"
   (case command
     ('prefix 
-     (and (eq major-mode 'zf-mode) ;; was php-mode
+     (and (eq major-mode 'php+-mode)
           (company-grab-symbol)))
     ('sorted t)
     ('candidates 

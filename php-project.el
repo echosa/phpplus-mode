@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2012-04-19 16:08:34 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:36:53 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -11,8 +11,8 @@
 ;;; About
 ;;; *****
 
-;; php-project.el is a part of the zf-mode suite and is used for setting 
-;; directories as "projects" that allow various parts of the zf-mode suite
+;; php-project.el is a part of the php+-mode suite and is used for setting 
+;; directories as "projects" that allow various parts of the php+-mode suite
 ;; to work on php files with the knowlege of which projects they belong to. 
 ;; This allows emacs to automatically load proper tag files, run proper unit 
 ;; tests, create files (e.g. controllers, models, etc) in proper locations, etc.

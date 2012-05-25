@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-26-2010
-;; Last modified: Time-stamp: "2012-04-19 15:39:34 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:36:48 bzwahr"
 ;; Copyright © 2010 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-doc.el is a part of the zf-mode suite and contains convenience 
+;; php-doc.el is a part of the php+-mode suite and contains convenience 
 ;; functions for phpdoc blocks. It will automatically insert phpdoc elements
 ;; such as author, description, and parameters.
 

@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 2011-07-17
-;; Last modified: Time-stamp: "2012-04-19 16:03:46 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:36:54 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-parse.el was created as part of the zf-mode suite and contains
+;; php-parse.el was created as part of the php+-mode suite and contains
 ;; a parsing library directed towards (but not necessarily limited to)
 ;; PHP files.  What started as fixing a bug in
 ;; php-find-method-position has led to the creation of a regex-based

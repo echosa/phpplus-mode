@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-04-23 13:58:23 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:36:50 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-test.el is a part of the zf-mode suite and allows phpunit and phpcs
+;; php-test.el is a part of the php+-mode suite and allows phpunit and phpcs
 ;; to be run directly from emacs on either a single file or the entire project.
 ;; Also, this sets up php files to be run though php lint upon saving. 
 ;; This uses setting set in php-project's customize.
@@ -29,7 +29,7 @@
 ;; and the file extensions that should be linted with php.
 ;; php-lint should be run automatically when an appropriate file is saved,
 ;; but can also be run manually.
-;; php lint, phpunit, and phpcs can all be run from the zf-mode menu or the
+;; php lint, phpunit, and phpcs can all be run from the php+-mode menu or the
 ;; available keyboard commands.
 ;; phpunit and phpcs can be run on either a single file (the current buffer)
 ;; or on the entire project. Concerning the latter, as far as phpcs is concerned

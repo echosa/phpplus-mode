@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 10-17-2011
-;; Last modified: Time-stamp: "2012-04-19 16:11:58 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-string.el is a part of the zf-mode suite and contains
+;; php-string.el is a part of the php+-mode suite and contains
 ;; convenience functions for dealing with PHP strings, such as quote
 ;; toggling and conversion to/from {here,now}docs.
 
@@ -28,7 +28,7 @@
 ;; FUNCTIONS
 ;; *********
 ; delcarations for compiler
-(declare-function zf-mode "zf-mode")
+(declare-function php+-mode "php+-mode")
 (defun php-remove-this-concat (&optional digest-variables)
   "Remove the concatenation character at point if it exists and
 it is proper to do so.  Will not join strings of unlike
@@ -464,7 +464,7 @@ commands unless you tell it to IGNORE-ECHO."
               (forward-char)
               (when (looking-back-p (concat "[^[:space:]\n;{}]" ws-re "*"))
                 (insert ";"))
-              (zf-delete-horizontal-space))
+              (php-delete-horizontal-space))
             (when (looking-back-p "[^[:space:]\n{][[:space:]]*\n[[:space:]]*")
               (newline-and-indent))
             (save-excursion
@@ -530,7 +530,7 @@ specified."
               (let ((echo-tag (string= (match-string-no-properties 1) "=")))
                 (backward-char 2)
                 (delete-region (- (match-beginning 0) 2) (match-end 0))
-                (zf-delete-horizontal-space nil t)
+                (php-delete-horizontal-space nil t)
                 (newline-and-indent)
                 (when echo-tag
                   (insert "echo "))))))))))
@@ -574,7 +574,7 @@ comment out the current statement."
                 (kill-region begin end)
                 (insert
                  (with-temp-buffer
-                   (zf-mode)
+                   (php+-mode)
                    (insert "<?php")
                    (newline)
                    (let ((offset (point)))

@@ -2,7 +2,7 @@
 
 ;; Version: 3.0
 ;; Created: 6-15-2009
-;; Last modified: Time-stamp: "2012-05-07 09:44:02 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:36:50 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-tags.el is a part of the zf-mode suite and is used for helping make
+;; php-tags.el is a part of the php+-mode suite and is used for helping make
 ;; tags for php files and projects easier. It uses projects setup with
 ;; php-project.
 
@@ -27,8 +27,8 @@
 ;; executable, the directory where you would like your ctags stored,
 ;; and the arguments to be used by ctags.
 ;;
-;; Use php-create-tag-file (available in the zf-mode menu) to create a
-;; tag file for the current project.  When using zf-mode, tags are
+;; Use php-create-tag-file (available in the php+-mode menu) to create a
+;; tag file for the current project.  When using php+-mode, tags are
 ;; automatically loaded when switching to a buffer of a php file
 ;; associated with a project.
 

@@ -1,8 +1,8 @@
-;;; zf-utils.el --- Miscellaneous helpful functions and keybindings
+;;; php-utils.el --- Miscellaneous helpful functions and keybindings
 
 ;; Version: 1.0
 ;; Created: 2011-07-19
-;; Last modified: Time-stamp: "2012-05-23 11:06:08 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; zf-utils.el was created as part of the zf-mode suite and contains
+;; php-utils.el was created as part of the php+-mode suite and contains
 ;; miscellaneous utility functions that do not have a home elsewhere,
 ;; but that are useful nonetheless and should not be cluttering up
 ;; users' .emacs.  We willprobably add defcustoms later so that people
@@ -75,7 +75,7 @@ applicable members of a list."
   (if (fboundp func)
       (global-set-key key-cmd func)))
 
-(defun zf-goto-line (line)
+(defun php-goto-line (line)
   "Goes to the given line, expanding the code if its hidden by hide-show."
   (interactive "nGoto Line: ")
   (goto-char (point-min))
@@ -86,4 +86,4 @@ applicable members of a list."
     (goto-char (point-min))
     (forward-line (1- line))))
 
-(provide 'zf-utils)
+(provide 'php-utils)

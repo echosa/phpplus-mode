@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2012-05-23 11:05:37 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:53:21 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-funcs.el is a part of the zf-mode suite and contains
+;; php-funcs.el is a part of the php+-mode suite and contains
 ;; convenience functions for php programming, such as moving between
 ;; methods and quick insertion of common code.
 
@@ -56,7 +56,7 @@ file/class/interface docblocks may be added in the future."
   :group 'php)
 
 ; declared for compiler
-(defvar zf-mode-protected-underscore)
+(defvar php+-mode-protected-underscore)
 
 ;; *********
 ;; FUNCTIONS
@@ -615,7 +615,7 @@ may also be STATICP."
       (message "Must provide a name!")
     (let* ((scope (if (stringp scope) (php-initial->scope scope) scope))
            (name (concat (if (or (eq scope 'private)
-                                 (and zf-mode-protected-underscore
+                                 (and php+-mode-protected-underscore
                                       (eq scope 'protected))) "_" "") name))
            (pos (php-find-struct-position 'property name scope)))
       (goto-char pos)
@@ -695,7 +695,7 @@ DOC-ARGS if you do not wish to be prompted for them."
         (message "Must provide a valid name!")
       (let* ((scope (if (symbolp scope) scope (php-initial->scope scope)))
              (name (concat (if (or (eq scope 'private)
-                                   (and zf-mode-protected-underscore
+                                   (and php+-mode-protected-underscore
                                         (eq scope 'protected))) "_" "") 
                            name))
              (pos (if (not non-class)
@@ -1018,7 +1018,7 @@ beginning of thing."
            (let* ((vis (rest (assq 'visibility value)))
                   (under (or (eq vis 'private)
                              (and (eq vis 'protected)
-                                  zf-mode-protected-underscore))))
+                                  php+-mode-protected-underscore))))
              (setf new-val 
                    (concat (when under "_") 
                            (replace-regexp-in-string "^_\\([^_]\\)" "\\1" 
@@ -1051,7 +1051,7 @@ directory."
         (newline))
       t)))
 
-(defun indent-or-expand (arg)
+(defun php-tab-key (arg)
   "Either indent according to mode, or expand the word preceding
 point."
   (interactive "*P")
@@ -1361,7 +1361,7 @@ change calls to the class name throughout the project."
     (zap-to-char 1 (string-to-char "{"))
     (insert declaration)
     (php-format-break-statement)
-    (let ((zf-mode-php-compile-on-save nil))
+    (let ((php+-mode-php-compile-on-save nil))
       (write-file (concat name ".php")))
     (when (y-or-n-p (concat "Convert calls to " class "?"))
       (php-project-query-replace-regexp class name))))

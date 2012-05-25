@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 11-01-2011
-;; Last modified: Time-stamp: "2012-04-19 15:54:00 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:46:10 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-edit.el is a part of the zf-mode suite and contains convenience
+;; php-edit.el is a part of the php+-mode suite and contains convenience
 ;; functions for PHP text editing, such as killing the current
 ;; structure and formatting the whitespace around it.
 
@@ -156,7 +156,7 @@ as well."
         (setq end (point))))))
 
 ; defined for compiler
-(defvar zf-mode-delete-trailing-whitespace)
+(defvar php+-mode-delete-trailing-whitespace)
 
 (defun php-format-spacing (&optional no-indent-all-lines)
   "Formats the spacing in the current class/interface according
@@ -205,7 +205,7 @@ passed NO-INDENT-ALL-LINES."
                       (setf end 
                             (+ end 
                                (indent-according-to-mode)))))))))))
-      (when zf-mode-delete-trailing-whitespace
+      (when php+-mode-delete-trailing-whitespace
         (delete-trailing-whitespace)))))
 
 (defun fixup-whitespace ()
@@ -216,7 +216,7 @@ operators."
   (interactive "*")
   (save-excursion
     (save-match-data
-      (zf-delete-horizontal-space)
+      (php-delete-horizontal-space)
       (if (or (looking-at "^\\|\\s)")
               (looking-at "->\\|::")
               (save-excursion (forward-char -1)

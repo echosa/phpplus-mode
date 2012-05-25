@@ -1,8 +1,8 @@
-;;; zf-font-lock.el --- Functions that deal with PHP font locking and syntax
+;;; php-font-lock.el --- Functions that deal with PHP font locking and syntax
 
 ;; Version: 1.0
 ;; Created: 11-23-2011
-;; Last modified: Time-stamp: "2012-04-19 16:27:05 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; zf-syntax.el is a part of the zf-mode suite and contains functions
+;; php-font-lock.el is a part of the php+-mode suite and contains functions
 ;; that are used by the syntax and font-lock engines. 
 
 ;; ********************************************************************
@@ -26,7 +26,7 @@
 ;; FUNCTIONS
 ;; *********
 
-(defun zf-setup-font-locking ()
+(defun php-setup-font-locking ()
   (make-local-variable 'font-lock-defaults)
   
   (setq font-lock-defaults
@@ -45,17 +45,17 @@
               ("\\(<\\)<<\\([\"']?\\)[a-zA-Z_-ÿ][a-zA-Z0-9_-ÿ]*\\(\\2\\)\n"
                (1 "<") (2 ".") (3 "."))
               ("^[a-zA-Z_-ÿ][a-zA-Z0-9_-ÿ]*\\([;\n]\\)" (1 ">"))))
-          (font-lock-syntactic-face-function . zf-syntactic-face-function)))
+          (font-lock-syntactic-face-function . php-syntactic-face-function)))
 
-  (add-hook 'font-lock-extend-region-functions 'zf-font-lock-extend-region nil 
+  (add-hook 'font-lock-extend-region-functions 'php-font-lock-extend-region nil 
             t)
 
   (setq font-lock-maximum-decoration t
         case-fold-search t              ; PHP vars are case-sensitive
         imenu-generic-expression php-imenu-generic-expression))
 
-(defun zf-font-lock-extend-region (&optional verbose)
-  (let ((verbose (or (and (boundp 'zf-verbose) zf-verbose) verbose))
+(defun php-font-lock-extend-region (&optional verbose)
+  (let ((verbose (or (and (boundp 'php-verbose) php-verbose) verbose))
         changed)
     (when verbose
       (message "Called with bounds %s - %s" font-lock-beg font-lock-end))
@@ -83,8 +83,8 @@
       (message "Returning changed = %s" changed))
     changed))
 
-(defun zf-syntactic-face-function (parse-state &optional verbose)
-  (let ((verbose (or (and (boundp 'zf-verbose) zf-verbose) verbose)))
+(defun php-syntactic-face-function (parse-state &optional verbose)
+  (let ((verbose (or (and (boundp 'php-verbose) php-verbose) verbose)))
     (when verbose
       (message "%s: (%s - %s)(%s - %s) - %s" (point)
                (when (char-before) (char-to-string (char-before)))
@@ -146,7 +146,7 @@
                                               'font-lock-preprocessor-face)
                            (put-text-property (1- (point)) (1+ (point))
                                               'fontified t)
-                           (zf-syntactic-face-function-process-bare-html))
+                           (php-syntactic-face-function-process-bare-html))
                           ((and (elt parse-state 4)
                                 (or (looking-at "\\(?1:<\\?\\(php\\|=\\)?\\)")
                                     (and (looking-back-p "<")
@@ -209,12 +209,12 @@
                           ((elt parse-state 3) 
                            (when verbose
                              (message "Default string"))
-                           (zf-syntactic-face-function-process-string)))))
+                           (php-syntactic-face-function-process-string)))))
           (when verbose
             (message "Returning %s at %s" face (point)))
           face)))))
 
-(defun zf-syntactic-face-function-process-string ()
+(defun php-syntactic-face-function-process-string ()
   (when (or (char-equal (char-before) ?\"))
     (let* ((string-end (save-excursion (php-skip-this-text-struct)))
            (text-begin (when string-end (point)))
@@ -275,7 +275,7 @@
         (put-text-property text-begin string-end 'fontified t))))
   font-lock-string-face)
 
-(defun zf-syntactic-face-function-process-bare-html ()
+(defun php-syntactic-face-function-process-bare-html ()
   (when verbose
     (message "Looking at bare html %s." (point)))
   (if (looking-at-p ">")
@@ -488,9 +488,9 @@
                           (goto-char attribute-end)))))))
               (when (not end-tagp) 
                 (cond ((string= (downcase tag) "style")
-                       (zf-syntactic-face-function-process-css))
+                       (php-syntactic-face-function-process-css))
                       ((string= (downcase tag) "script")
-                       (zf-syntactic-face-function-process-javascript)))))))
+                       (php-syntactic-face-function-process-javascript)))))))
         (save-excursion
           (save-match-data
             (while (and (<= (point) html-end)
@@ -502,7 +502,7 @@
                                    'font-lock-comment-face)))))))
     nil)
  
-(defun zf-syntactic-face-function-process-css ()
+(defun php-syntactic-face-function-process-css ()
   (when verbose
     (message "STYLE tag found, highlighting CSS."))
   (forward-char)
@@ -569,7 +569,7 @@
                                     (match-end 4) 'face 
                                     nil)))))))
 
-(defun zf-syntactic-face-function-process-javascript ()
+(defun php-syntactic-face-function-process-javascript ()
   (when verbose
     (message "SCRIPT tag found, highlighting Javascript."))
   (forward-char)
@@ -579,4 +579,4 @@
                      (point-max)))))
     (remove-text-properties tag-end end-tag '(face nil))))
 
-(provide 'zf-font-lock)
+(provide 'php-font-lock)

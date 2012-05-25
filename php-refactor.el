@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 08-08-2011
-;; Last modified: Time-stamp: "2012-04-19 16:09:11 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:36:52 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-refactor.el is a part of the zf-mode suite and contains
+;; php-refactor.el is a part of the php+-mode suite and contains
 ;; convenience functions for renaming and moving PHP structures.
 
 ;; ********************************************************************

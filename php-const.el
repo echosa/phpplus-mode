@@ -453,7 +453,7 @@
           (1 font-lock-constant-face)))
 
    ;; treat 'print' as keyword only when not used like a function name
-   '("\\<\\(print\\|die\\)\\s-*(" (1 zf-default-face))
+   '("\\<\\(print\\|die\\)\\s-*(" (1 php+-default-face))
    '("\\<\\(print\\|die\\)\\>" (1 font-lock-keyword-face))
 
    ;; Fontify PHP tag
@@ -526,7 +526,7 @@
 
     ;; ;; warn about '$' immediately after ->
     ;; '("\\$\\sw+->\\s-*\\(\\$\\)\\(\\sw+\\)"
-    ;;   (1 font-lock-warning-face) (2 zf-default-face))
+    ;;   (1 font-lock-warning-face) (2 php+-default-face))
 
     ;; warn about $word.word -- it could be a valid concatenation,
     ;; but without any spaces we'll assume $word->word was meant.
@@ -549,13 +549,13 @@
 ;;    `(,(concat "\\$\\(" php-superglobals "\\)\\W")
 ;;      (1 font-lock-constant-face nil nil)) ;; $_GET & co
     '("\\$\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; $variable
-    '("\\$\\(\\$\\)" (1 zf-default-face t t)) ;; $$variable
-    '("->\\(\\sw+\\)\\s-*(" . (1 zf-default-face)) ;; ->function_call
+    '("\\$\\(\\$\\)" (1 php+-default-face t t)) ;; $$variable
+    '("->\\(\\sw+\\)\\s-*(" . (1 php+-default-face)) ;; ->function_call
     '("->\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; ->variable
     '("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
-    '("::\\(\\sw+\\>[^(]\\)" . (1 zf-default-face)) ;; class::constant
-    '("\\<\\sw+\\s-*[[(]" . zf-default-face) ;; word( or word[
-    '("\\<[0-9]+" . zf-default-face) ;; number (also matches word)
+    '("::\\(\\sw+\\>[^(]\\)" . (1 php+-default-face)) ;; class::constant
+    '("\\<\\sw+\\s-*[[(]" . php+-default-face) ;; word( or word[
+    '("\\<[0-9]+" . php+-default-face) ;; number (also matches word)
 
     ;; Warn on any words not already fontified
     ;; '("\\<\\sw+\\>" . font-lock-warning-face)

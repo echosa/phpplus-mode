@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 2011-07-17
-;; Last modified: Time-stamp: "2012-03-29 14:01:49 mdwyer"
+;; Last modified: Time-stamp: "2012-05-25 12:16:09 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -55,11 +55,11 @@ more information."
         (setq s (substring s 0 -1)))
       s)))
 
-(defun zf-delete-horizontal-space (&optional backward-only include-newlines)
+(defun php-delete-horizontal-space (&optional backward-only include-newlines)
   "This wrapper around ``delete-horizontal-space'' returns the
 amount of text-size change.  Can be told to INCLUDE-NEWLINES as
 well."
-  (let ((change (zf-delete-horizontal-space-aux backward-only)))
+  (let ((change (php-delete-horizontal-space-aux backward-only)))
     (when include-newlines
       (save-match-data
         (when (looking-at "\n[[:space:]]*")
@@ -69,7 +69,7 @@ well."
             (setf change (+ change (- b e)))))))
     change))
 
-(defun zf-delete-horizontal-space-aux (&optional backward-only)
+(defun php-delete-horizontal-space-aux (&optional backward-only)
   "Re-implementation of ``delete-horizontal-space'' which returns
 the change in text size."
     (unless (or backward-only (looking-at-p non-ws-re))
@@ -100,7 +100,7 @@ IGNORE-NEWLINES.  Return the amount of text added."
                              (line-beginning-position) 
                            (point-min))))
             (setf begin-change (+ begin-change 
-                                  (zf-delete-horizontal-space 
+                                  (php-delete-horizontal-space 
                                    nil (not ignore-newlines))))
             (unless (looking-back-p "^")
               (insert " ")
@@ -109,7 +109,7 @@ IGNORE-NEWLINES.  Return the amount of text added."
             (backward-char)
             (when (looking-at-p ws-re)
               (setf end-change (+ end-change 
-                                  (zf-delete-horizontal-space 
+                                  (php-delete-horizontal-space 
                                    nil (not ignore-newlines)))))
             (insert " ")
             (setf end-change (1+ end-change))))

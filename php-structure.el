@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 10-03-2011
-;; Last modified: Time-stamp: "2012-04-19 16:13:14 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-structure.el is a part of the zf-mode suite and contains
+;; php-structure.el is a part of the php+-mode suite and contains
 ;; convenience functions for dealing with PHP structure, such as
 ;; determining whether point is within a string and where the
 ;; beginning of the current statment resides.
@@ -23,7 +23,7 @@
 ;; ************
 (require 'cl)
 (require 'php-parse)
-(require 'zf-utils)
+(require 'php-utils)
 
 ;; *********
 ;; VARIABLES

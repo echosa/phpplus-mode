@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-04-19 15:48:47 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -11,7 +11,7 @@
 ;;; About
 ;;; *****
 
-;; php-format.el is a part of the zf-mode suite and contains
+;; php-format.el is a part of the php+-mode suite and contains
 ;; convenience functions for PHP formatting, such as re-ordering the
 ;; constants, properties and methods withing a class and line
 ;; breaking.
@@ -108,7 +108,7 @@ breaking strings."
   :group 'php-format
   :type 'boolean)
 
-(defcustom zf-force-single-quoted-strings nil
+(defcustom php-force-single-quoted-strings nil
   "Whether to auto-convert strings to single-quoted when running
 script cleanup functions."
   :group 'php-format
@@ -125,7 +125,7 @@ script cleanup functions."
 (declare-function php-format-spacing "php-format")
 (declare-function php-change-string-quotes "php-string")
 (declare-function php-implode-concats-in-statement "php-string")
-(declare-function zf-mode "zf-mode")
+(declare-function php+-mode "php+-mode")
 (declare-function hs-already-hidden-p "hideshow")
 (declare-function hs-hide-block "hideshow")
 
@@ -265,7 +265,7 @@ not sit at all."
 kept below MAX-LENGTH.  Optionally, start at BEGIN and end at
 END.  You may also STRIP-NEWLINES-IN-STRINGs with a prefix arg.
 You may also tell it to be VERBOSE by using the parameter or
-setting zf-verbose to true."
+setting php-verbose to true."
   (interactive "P")
   (let ((start-pos (point)))
     (when (looking-at-p (concat ws-re "*$"))
@@ -284,7 +284,7 @@ setting zf-verbose to true."
               (forward-line))
             (goto-char start-pos)
             (- comment-end old-end))
-        (let ((verbose (or (and (boundp 'zf-verbose) zf-verbose) verbose))
+        (let ((verbose (or (and (boundp 'php-verbose) php-verbose) verbose))
               (begin (if (integerp begin) begin (php-in-statementp))))
           (when begin
             (goto-char begin)
@@ -318,7 +318,7 @@ setting zf-verbose to true."
                             (statement-text 
                              (buffer-substring-no-properties begin bound)))
                        (php-format-break-statement-text verbose)
-                       (zf-delete-horizontal-space)
+                       (php-delete-horizontal-space)
                        (- (point) old-end)))))
               (goto-char start-pos)
               change)))))))
@@ -331,10 +331,10 @@ everything IN-BUFFER."
                    (goto-char bound))
         (t (goto-char bound)
            (insert (chomp (with-temp-buffer
-                            (zf-mode)
+                            (php+-mode)
                             (insert "<?php")
                             (newline)
-                            (dotimes (i (/ begin-column zf-basic-offset))
+                            (dotimes (i (/ begin-column php-basic-offset))
                               (indent-according-to-mode)
                               (insert "if ($test) {\n"))
                             (indent-according-to-mode)
@@ -516,7 +516,7 @@ the movement of CHANGE-POINT."
         (change 0))
     (save-excursion
       (end-of-line)
-      (let ((gap (zf-delete-horizontal-space)))
+      (let ((gap (php-delete-horizontal-space)))
         (when (<= (point) change-point) 
           (setf change gap change-point (+ change-point gap))))
       (when (looking-at-p (concat ws-re "*" operator-regexp))
@@ -554,7 +554,7 @@ the movement of CHANGE-POINT."
                                 (setf change (+ change gap)
                                       change-point (+ change-point gap))))))
                         (beginning-of-line-text)
-                        (let ((gap (zf-delete-horizontal-space t)))
+                        (let ((gap (php-delete-horizontal-space t)))
                           (when (<= (point) change-point)
                             (setf change (+ change gap)
                                   change-point (+ change-point gap))))
@@ -631,7 +631,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
                                      3 1))
                   (when (looking-back-p ws-re)
                     (backward-char)
-                    (setf end (+ end (zf-delete-horizontal-space))))
+                    (setf end (+ end (php-delete-horizontal-space))))
                   (setq end (+ end (newline-and-indent)))
                   (re-search-forward (char-to-string this-quote))
                   (setf this-string-begin (point))))
@@ -799,7 +799,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
     (backward-char)
     (if (and (php-class/interface-definitionp)
              (not (looking-back "^[[:space:]]*")))
-        (let ((gap (+ (zf-delete-horizontal-space)
+        (let ((gap (+ (php-delete-horizontal-space)
                       (newline-and-indent))))
           (setf bound (+ bound gap) last-point (+ bound gap)))
       (when (re-search-backward ")" begin t)
@@ -814,7 +814,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
               (setf bound (1+ bound))
               (setf bound (+ bound (indent-according-to-mode)))))
           (forward-char)
-          (let ((gap (zf-delete-horizontal-space)))
+          (let ((gap (php-delete-horizontal-space)))
             (setf bound (+ bound gap) last-point (+ last-point gap)))
           (if (or (and (php-anonymous-function-definitionp)
                        (or php-format-break-anonymous-function-always
@@ -835,12 +835,12 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
       (insert " ")
       (setf bound (1+ bound) last-point (1+ last-point)))
     (when (looking-at-p (concat ws-re "*$"))
-      (zf-delete-horizontal-space))))
+      (php-delete-horizontal-space))))
 
 (defun php-format-break-statement-opening-parenthesis-aux ()
   "Auxillary function used by ``php-format-break-statement''."
   (when (<= (current-column) max-length)
-    (setf bound (+ bound (zf-delete-horizontal-space nil t)))
+    (setf bound (+ bound (php-delete-horizontal-space nil t)))
     (backward-char)
     (let* ((sexp-ends (save-excursion
                         (forward-sexp)
@@ -859,7 +859,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
         (re-search-backward non-ws-re nil t)
         (forward-char)
         (when (looking-back-p (php-type-regexp 'identifier))
-          (let ((gap (zf-delete-horizontal-space)))
+          (let ((gap (php-delete-horizontal-space)))
             (setf bound (+ bound gap) last-point (+ last-point gap)))))
       (when (or (looking-back-p "return")
                 (and in-control 
@@ -907,10 +907,10 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
   "Auxillary function used by ``php-format-break-statement''."
   (save-excursion
     (backward-char)
-    (let ((gap (zf-delete-horizontal-space)))
+    (let ((gap (php-delete-horizontal-space)))
       (setf bound (+ gap bound) last-point (+ gap last-point))))
   (when (looking-at-p ws-re)
-    (setf bound (+ bound (zf-delete-horizontal-space))))
+    (setf bound (+ bound (php-delete-horizontal-space))))
   (unless (looking-at-p "$")
     (let* ((current-line (line-number-at-pos))
            (atom-end-col (save-excursion (php-skip-this-atom) (current-column)))
@@ -945,7 +945,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
 (defun php-format-break-statement-for-semicolons-aux ()
   "Auxillary function used by ``php-format-break-statement''."
   (when (looking-at-p ws-re)
-    (setf bound (+ bound (zf-delete-horizontal-space nil t))))
+    (setf bound (+ bound (php-delete-horizontal-space nil t))))
   (let* ((current-line (line-number-at-pos))
          (sexp-begin-line (when (integerp sexp-begin)
                             (save-excursion
@@ -1002,7 +1002,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
         (save-match-data
           (re-search-backward non-ws-re nil t)
           (forward-char)
-          (let ((gap (zf-delete-horizontal-space)))
+          (let ((gap (php-delete-horizontal-space)))
             (setf bound (+ bound gap) last-point (+ last-point gap)))))
       (unless (looking-back-p (concat "^" ws-re "*" (when in-control ")*")))
         (if (and (second sexp-begin-stats) multilinep)
@@ -1012,7 +1012,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
           (save-excursion
             (backward-sexp)
             (forward-char)
-            (let ((gap (zf-delete-horizontal-space)))
+            (let ((gap (php-delete-horizontal-space)))
               (setf bound (+ bound gap) last-point (+ last-point gap)))
             (when (and (looking-back-p "{")
                        (not (looking-at-p "[[:space:]]*$")))
@@ -1023,7 +1023,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
                      (not (looking-back-p "^[[:space:]]*")))
             (when (looking-back-p ws-re)
               (backward-char)
-              (let ((gap (zf-delete-horizontal-space nil t)))
+              (let ((gap (php-delete-horizontal-space nil t)))
                 (setf bound (+ bound gap) last-point (+ last-point gap))))
             (insert " ")
             (setf bound (1+ bound) last-point (1+ last-point))))))
@@ -1144,7 +1144,7 @@ added."
                 (forward-char)
               (re-search-backward non-ws-re nil t)
               (forward-char))
-            (php-format-update-break-points (zf-delete-horizontal-space nil t))
+            (php-format-update-break-points (php-delete-horizontal-space nil t))
             (php-format-update-break-points (1+ (newline-and-indent)))))))))
 
 (defun php-format-break-at-commas (&optional max-length begin end break-every)
@@ -1226,7 +1226,7 @@ a line, just go to the next one."
                (when (looking-at-p "[;{]")
                  (forward-char (php-format-break-statement)))
                (forward-char)
-               (zf-delete-horizontal-space)
+               (php-delete-horizontal-space)
                (when at-eof
                  (save-excursion
                    (newline)))
@@ -1326,10 +1326,10 @@ FORCE-QUOTES."
                        (when force-quotes
                          (condition-case nil
                              (setf end (+ end 
-                                          (zf-force-string-quotes-statement)))
+                                          (php-force-string-quotes-statement)))
                            (error 
                             (message (concat "Error running "
-                                             "zf-force-string-quotes-statement "
+                                             "php-force-string-quotes-statement "
                                              "in php-format-break-this-type at "
                                              "%s.")
                                      (point)))))
@@ -1370,7 +1370,7 @@ use point and mark. "
   (let ((type (if (and (integerp start) (integerp end))
                   `(,start . ,end)
                 '(constant property method))))
-    (php-format-break-this-type type sit-for zf-force-single-quoted-strings)))
+    (php-format-break-this-type type sit-for php-force-single-quoted-strings)))
 
 (defun php-format-break-class/interface (&optional sit-for)
   "Runs ``php-format-break-statement'' on all statements in the
@@ -1379,7 +1379,7 @@ to SIT-FOR at each statement.  If SIT-FOR is nil, will not sit at
 all."
   (interactive "P")
   (php-format-break-this-type '(class interface) sit-for 
-                              zf-force-single-quoted-strings))
+                              php-force-single-quoted-strings))
 
 (defun php-format-clean-up-script (&optional sit-for)
   "Runs ``php-format-break-class/interface'' and then
@@ -1397,7 +1397,7 @@ negative, it will not sit at all."
     (save-excursion
       (if (not (php-jump-to-first-class/interface))
           (php-format-break-this-type '(script) sit-for 
-                                      zf-force-single-quoted-strings)
+                                      php-force-single-quoted-strings)
         (php-format-break-class/interface sit-for)
         (php-rearrange-innards sit-for)))))
 
@@ -1409,7 +1409,7 @@ short-tags with their equivalents."
                             php-block-stmt-2-key "\\)"))
         (statement-re (concat "\\(\\(?:include\\|require\\)\\(?:_once\\)?\\)"
                               "\\s-*(\\([^)]*?\\))\\s-*;")))
-    (dolist (pair `(("\t" ,(make-string zf-basic-offset ?\ ))
+    (dolist (pair `(("\t" ,(make-string php-basic-offset ?\ ))
                     ("<\\?=" "<?php echo")
                     ("<\\?[^p]\\s-*" "<?php ")
                     ("\\([^\n[:space:];{]\\)\\s-*\\?>" "\\1; ?>")
@@ -1465,7 +1465,7 @@ short-tags with their equivalents."
                 (funcall replacement))))))
       (delete-trailing-whitespace))))
  
-(defun zf-force-string-quotes-statement (&optional statement-begin 
+(defun php-force-string-quotes-statement (&optional statement-begin 
                                                    statement-end)
   "Trial function to turn all double-quoted strings in the
 current PHP statement to single-quoted.  You may also specify
@@ -1492,7 +1492,7 @@ STATEMENT-BEGIN and/or STATEMENT-END or use point and mark."
                   (throw 'done t)))))))
       change)))
 
-(defun zf-force-string-quotes ()
+(defun php-force-string-quotes ()
   "Trial function to turn all double-quoted strings in PHP
 scripts to single-quoted."
   (interactive)

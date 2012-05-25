@@ -2,11 +2,20 @@
 
 ;; Version: 3.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-25 11:43:19 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 13:07:26 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
 ;; Brian Zwahr <echosa@gmail.com>
+
+;;; *********
+;;; Custom
+;;; *********
+(defcustom zf-use-hyphens-in-viewscript-urls nil
+  "Whether or not to use hyphens when generating viewscript urls
+from controller names."
+  :type 'boolean
+  :group 'php+-mode)
 
 ;;; *********
 ;;; Constants
@@ -605,7 +614,7 @@ script where the point is located."
 Framework element (controller, model, etc). The third and fourth
 arguments are used when getting the directory for a view script.
 If the fourth is omitted the default conversion specified in the
-defcustom `zf-mode-use-hyphens-in-viewscript-urls' will be used."
+defcustom `zf-use-hyphens-in-viewscript-urls' will be used."
   (if (nil-or-blank subject)
       (message "Must give a subject!")
     (let ((dirappend (if (string= "library" subject)
@@ -829,8 +838,8 @@ available.  MODULE defaults to the global module."
 
 (defun zf-get-default-viewscript-url (controller)
   "Retrun the default viewscript url for a controller.  Respects
-`zf-mode-use-hyphens-in-viewscript-urls'."
-  (if zf-mode-use-hyphens-in-viewscript-urls
+`zf-use-hyphens-in-viewscript-urls'."
+  (if zf-use-hyphens-in-viewscript-urls
       (camelcase->hyphenated controller)
     (downcase controller)))
 
@@ -898,7 +907,7 @@ version for the default."
 of MODULE is available.  MODULE defaults to the global
 module. URL may be specified if it differs from the normal
 mapping (controlled by
-`zf-mode-use-hyphens-in-viewscript-urls')."
+`zf-use-hyphens-in-viewscript-urls')."
   (let ((viewscript-list (zf-viewscript-list controller module url project)))
     (completing-read "Viewscript: " viewscript-list)))
 

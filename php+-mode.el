@@ -2,7 +2,7 @@
 
 ;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-25 12:52:46 bzwahr"
+;; Last modified: Time-stamp: "2012-05-25 13:05:53 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -107,12 +107,6 @@ trailing whitespace will be deleted from files prior to saving."
 (defcustom php+-mode-protected-underscore nil
   "Whether or not protected properties and methods begin with an
 underscore."
-  :type 'boolean
-  :group 'php+-mode)
-
-(defcustom php+-mode-use-hyphens-in-viewscript-urls nil
-  "Whether or not to use hyphens when generating viewscript urls
-from controller names."
   :type 'boolean
   :group 'php+-mode)
 

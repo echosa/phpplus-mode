@@ -25,8 +25,9 @@ easiest way to obtain php+-mode is through package.el, which is included in
 Emacs 24, but can be obtained for Emacs 23. Add the melpa repoitory to your
 package repositores list (instructions can be found at
 http://melpa.milkbox.net/#installing).  Otherwise, you can get php+-mode
-straight from github at https://github.com/echosa/php+-mode. This is recommended
-for anyone who wants to help develop php+-mode or contribute changes/fixes.
+straight from github at https://github.com/echosa/phpplus-mode. This is
+recommended for anyone who wants to help develop php+-mode or contribute
+changes/fixes.
 
 Once you have donwloaded and installed php+-mode, put this in your .emacs file:
 

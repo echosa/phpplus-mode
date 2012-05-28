@@ -8,8 +8,8 @@ php+-mode comes with pretty much everything neccesary to run it.  Emacs version
 Note that there is a known issue with company-mode version 0.5, or at least
 with the version available from elpa.  See the INSTALL section for details.
 
-For php-test, your system needs to have PHP installed on it for linting, and to use
-any of the testing programs (phpunit, phpcs, phpmd), you need to have those
+For php-test, your system needs to have PHP installed on it for linting, and to
+use any of the testing programs (phpunit, phpcs, phpmd), you need to have those
 installed as well.
 
 If you would like electric functionality (for instance, when you type ( the
@@ -21,12 +21,13 @@ INSTALL
 
 Ensure that all required modes and elisp files are on the load path and loaded.
 Also ensure that php+-mode's elisp files are on the load path and loaded.  The
-easiest way to obtain php+-mode is through package.el, which is included in Emacs
-24, but can be obtained for Emacs 23. Add the melpa repoitory to your package
-repositores list (instructions can be found at
-http://melpa.milkbox.net/#installing).  Otherwise, you can get php+-mode straight
-from github at https://github.com/echosa/php+-mode. This is recommended for anyone
-who wants to help develop php+-mode or contribute changes/fixes.
+easiest way to obtain php+-mode is through package.el, which is included in
+Emacs 24, but can be obtained for Emacs 23. Add the melpa repoitory to your
+package repositores list (instructions can be found at
+http://melpa.milkbox.net/#installing).  Otherwise, you can get php+-mode
+straight from github at https://github.com/echosa/phpplus-mode. This is
+recommended for anyone who wants to help develop php+-mode or contribute
+changes/fixes.
 
 Once you have donwloaded and installed php+-mode, put this in your .emacs file:
 
@@ -35,9 +36,9 @@ Once you have donwloaded and installed php+-mode, put this in your .emacs file:
 
 Either execute these two lines of code, or restart emacs.
 
-At this point, you should be ready to use php+-mode.  Just open up a php or phtml 
-file, and you should find yourself in php+-mode.  You should have a ZF menu and 
-"zf" should be in the mode line.
+At this point, you should be ready to use php+-mode.  Just open up a php or
+phtml file, and you should find yourself in php+-mode.  You should have a ZF
+menu and "zf" should be in the mode line.
 
 To get an idea of what you can do with php+-mode, you can get a description and 
 list of keybindings/functions for php+-mode by typing:

@@ -1,15 +1,15 @@
-zf-mode README
+php+-mode README
 ===============================================================================
 REQUIREMENTS
 
-zf-mode comes with pretty much everything neccesary to run it.  Emacs version 
+php+-mode comes with pretty much everything neccesary to run it.  Emacs version 
 23 or later is recommended.
 
 Note that there is a known issue with company-mode version 0.5, or at least
 with the version available from elpa.  See the INSTALL section for details.
 
-For php-test, your system needs to have PHP installed on it for linting, and to use
-any of the testing programs (phpunit, phpcs, phpmd), you need to have those
+For php-test, your system needs to have PHP installed on it for linting, and to
+use any of the testing programs (phpunit, phpcs, phpmd), you need to have those
 installed as well.
 
 If you would like electric functionality (for instance, when you type ( the
@@ -20,29 +20,29 @@ time of this writing can be found at http://stcamp.net/share/php-electric.el
 INSTALL
 
 Ensure that all required modes and elisp files are on the load path and loaded.
-Also ensure that zf-mode's elisp files are on the load path and loaded.  The
-easiest way to obtain zf-mode is through package.el, which is included in Emacs
-24, but can be obtained for Emacs 23. Add the melpa repoitory to your package
-repositores list (instructions can be found at
-http://melpa.milkbox.net/#installing).  Otherwise, you can get zf-mode straight
-from github at https://github.com/echosa/zf-mode. This is recommended for anyone
-who wants to help develop zf-mode or contribute changes/fixes.
+Also ensure that php+-mode's elisp files are on the load path and loaded.  The
+easiest way to obtain php+-mode is through package.el, which is included in
+Emacs 24, but can be obtained for Emacs 23. Add the melpa repoitory to your
+package repositores list (instructions can be found at
+http://melpa.milkbox.net/#installing).  Otherwise, you can get php+-mode
+straight from github at https://github.com/echosa/php+-mode. This is recommended
+for anyone who wants to help develop php+-mode or contribute changes/fixes.
 
-Once you have donwloaded and installed zf-mode, put this in your .emacs file:
+Once you have donwloaded and installed php+-mode, put this in your .emacs file:
 
-(require 'zf-mode)
-(zf-mode-setup)
+(require 'php+-mode)
+(php+-mode-setup)
 
 Either execute these two lines of code, or restart emacs.
 
-At this point, you should be ready to use zf-mode.  Just open up a php or phtml 
-file, and you should find yourself in zf-mode.  You should have a ZF menu and 
-"zf" should be in the mode line.
+At this point, you should be ready to use php+-mode.  Just open up a php or
+phtml file, and you should find yourself in php+-mode.  You should have a ZF
+menu and "zf" should be in the mode line.
 
-To get an idea of what you can do with zf-mode, you can get a description and 
-list of keybindings/functions for zf-mode by typing:
+To get an idea of what you can do with php+-mode, you can get a description and 
+list of keybindings/functions for php+-mode by typing:
     C-h m
-when inside of a zf-mode file.
+when inside of a php+-mode file.
 
 If you have existing projects, or would like to add a new one, you can add them
 to the php-project list by running:
@@ -68,8 +68,8 @@ keywords and such.
 ===============================================================================
 CONFIGURATION
 
-You can use the various "customize ..." options in the zf-mode menus to 
-customize zf-mode.  Hopefully most of these customize options are 
+You can use the various "customize ..." options in the php+-mode menus to 
+customize php+-mode.  Hopefully most of these customize options are 
 self-explanatory.  For a full list of cutomize options, just browse through
 each of the customize groups with `M-x customize-group`:
  - php-completion
@@ -79,7 +79,7 @@ each of the customize groups with `M-x customize-group`:
  - php-project
  - php-tags
  - php-test
- - zf-mode
+ - php+-mode
 
 ***********
 EXECUTABLES
@@ -119,7 +119,7 @@ Extra TAGS Directories - A list of directories to include when generating the
     project TAGS file.  You may want to put the Zend Framework directories here.
     Project directory is included by default.
 PHPUnit Config File - This is the xml configuration file that phpunit will use
-    when phpunit is run from zf-mode.
+    when phpunit is run from php+-mode.
 phpcs/phpmd Subdirectories - This is a list of directories which should be
     included when phpcs is run for the project directory.  
 phpdoc overrides - these are project specific phpdoc information to include in
@@ -149,7 +149,7 @@ In order to use tags, you have to do two things:
 1.) Create a tags file
 2.) Load the tags file
 
-The php-tags portion of zf-mode eases this process.  It requires you to have 
+The php-tags portion of php+-mode eases this process.  It requires you to have 
 exhuberant-ctags installed.  This is different from ctags.  Basically, in my
 experience, if your ctags does not have a -e flag, you need to get 
 exhuberant-ctags to use.  There is a customizable variable 
@@ -171,5 +171,5 @@ you switch to a file or buffer that resides inside that project's directory.
 ===============================================================================
 AUTHORS
 
-zf-mode is written and maintained by Brian Zwahr <echosa@gmail.com> and 
+php+-mode is written and maintained by Brian Zwahr <echosa@gmail.com> and 
 Mike Dwyer <mdwyer@ehtech.in>.

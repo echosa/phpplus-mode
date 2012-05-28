@@ -37,8 +37,8 @@ Once you have donwloaded and installed php+-mode, put this in your .emacs file:
 Either execute these two lines of code, or restart emacs.
 
 At this point, you should be ready to use php+-mode.  Just open up a php or
-phtml file, and you should find yourself in php+-mode.  You should have a ZF
-menu and "zf" should be in the mode line.
+phtml file, and you should find yourself in php+-mode.  You should have a PHP+
+menu and "php+" should be in the mode line.
 
 To get an idea of what you can do with php+-mode, you can get a description and 
 list of keybindings/functions for php+-mode by typing:
@@ -101,7 +101,7 @@ PROJECTS AND DIRECTORIES
 To add a project to the projects list the easy way, run:
     M-x php-project-add
 Alternatively, you can add projects manually by going to 
-    ZF -> Project -> Customize Projects 
+    PHP+ -> Project -> Customize Projects 
 in the menu or by typing
     M-x customize-variable php-project-list
 
@@ -158,7 +158,7 @@ php-tag-shell-command where you can set the path to your ctags command if
 neccessary.
 
 To create a tags file you can either go to
-    ZF -> Tags -> Create tags file
+    PHP+ -> Tags -> Create tags file
 in the menu, or run
     M-x php-create-tag-file
 

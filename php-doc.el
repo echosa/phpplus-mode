@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-26-2010
-;; Last modified: Time-stamp: "2012-05-25 12:36:48 bzwahr"
+;; Last modified: Time-stamp: "2012-05-28 16:45:46 echosa"
 ;; Copyright © 2010 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -94,27 +94,29 @@ function name."
   "Returns a PHP doc default X, looking first in the current
 buffer, then the PHP Project PHP DOC list and then tries the
 php-doc-default-X defcustom."
-  (or (php-doc-get-field-from-buffer x)
-      (let ((var-name (or (let ((doc-val 
-                                 (elt (php-project-php-doc) 
-                                      (cond ((string= x "author") 0)
-                                            ((string= x "copyright") 1)
-                                            ((string= x "license") 2)
-                                            ((string= x "version") 3)
-                                            ((string= x "php-version") 4)
-                                            ((string= x "link") 5)
-                                            ((string= x "category") 6)
-                                            ((string= x "package") 7)
-                                            ((string= x "subpackage") 8)))))
-                            (when (not (and (stringp doc-val)
-                                            (zerop (length doc-val))))
-                              doc-val))
-                          (symbol-value (intern (concat "php-doc-default-" 
-                                                        x))))))
-        (if (not (stringp var-name))
-            var-name
-          (let ((sym (intern var-name)))
-            (if (functionp sym) (funcall sym) var-name))))))
+  (let ((field  (php-doc-get-field-from-buffer x)))
+    (if (nil-or-blank field)
+        (let ((var-name (or (let ((doc-val 
+                                   (elt (php-project-php-doc) 
+                                        (cond ((string= x "author") 0)
+                                              ((string= x "copyright") 1)
+                                              ((string= x "license") 2)
+                                              ((string= x "version") 3)
+                                              ((string= x "php-version") 4)
+                                              ((string= x "link") 5)
+                                              ((string= x "category") 6)
+                                              ((string= x "package") 7)
+                                              ((string= x "subpackage") 8)))))
+                              (when (not (and (stringp doc-val)
+                                              (zerop (length doc-val))))
+                                doc-val))
+                            (symbol-value (intern (concat "php-doc-default-" 
+                                                          x))))))
+          (if (not (stringp var-name))
+              var-name
+            (let ((sym (intern var-name)))
+              (if (functionp sym) (funcall sym) var-name))))
+      field)))
 
 (defun php-doc-get-author ()
   "Returns a default author, respecting the

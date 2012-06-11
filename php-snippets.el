@@ -115,6 +115,13 @@ Argument TEXT text sent from yasnippet."
     choice
 ))
 
+(defun php-yas-get-author ()
+  "Gets the correct author."
+  (let ((author (php-doc-get-author)))
+    (if (stringp author)
+        author
+      (concat (car author) " <" (cdr author) ">"))))
+
 (defun php-yas-break ()
   "Breaks after snippet expansion, if needed."
   (when (eq major-mode 'php+-mode)

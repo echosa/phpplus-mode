@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 11-23-2011
-;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
+;; Last modified: Time-stamp: "2012-06-24 21:30:12 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -486,7 +486,7 @@
                                           (goto-char (match-end 0))
                                           (throw 'found t))))))))
                           (goto-char attribute-end)))))))
-              (when (not end-tagp) 
+              (when (and tag (not end-tagp))
                 (cond ((string= (downcase tag) "style")
                        (php-syntactic-face-function-process-css))
                       ((string= (downcase tag) "script")

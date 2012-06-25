@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 11-23-2011
-;; Last modified: Time-stamp: "2012-06-24 21:30:12 mdwyer"
+;; Last modified: Time-stamp: "2012-06-24 21:42:34 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -449,7 +449,7 @@
                                 ;;   (if found 
                                 ;;       (message "Found it: %s" found)
                                 ;;     (message "Not found.")))
-                                (setq end-quote found))))
+                                (setq end-quote found)))
                           (when end-quote
                             ;; (when verbose
                             ;;   (message "Stringifying closing quote at %s."
@@ -500,7 +500,7 @@
                                       (point-max))))
                 (put-text-property comment-begin comment-end 'face 
                                    'font-lock-comment-face)))))))
-    nil)
+    nil))
  
 (defun php-syntactic-face-function-process-css ()
   (when verbose

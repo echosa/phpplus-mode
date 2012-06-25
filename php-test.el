@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-25 12:36:50 bzwahr"
+;; Last modified: Time-stamp: "2012-06-24 22:34:38 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -473,9 +473,10 @@ point is currently in."
         start)
     (pop-to-buffer "*compilation*" nil t)
     (let ((inhibit-read-only t))
-      (re-search-forward "EXIT_STATUS")
-      (beginning-of-line)
-      (delete-region (point) (line-end-position 2)))
+      (goto-char (point-min))
+      (when (re-search-forward "EXIT_STATUS")
+        (beginning-of-line)
+        (delete-region (point) (line-end-position 2))))
     (pop-to-buffer current-buffer)))
 
 (defun php-test-customize ()

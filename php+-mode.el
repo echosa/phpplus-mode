@@ -2,7 +2,7 @@
 
 ;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-05-25 13:22:55 bzwahr"
+;; Last modified: Time-stamp: "2012-06-26 17:00:31 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -745,6 +745,7 @@ including unittests or bundled packages."
   (c-set-offset 'brace-list-intro 'php-brace-list-intro-lineup)
   (c-set-offset 'brace-list-entry 'php-brace-list-entry-lineup)
   (c-set-offset 'brace-list-close 'php-brace-list-close-lineup)
+  (c-set-offset 'func-decl-cont 'php-func-decl-cont)
 
   (when (and php+-mode-show-trailing-whitespace
              (boundp 'show-trailing-whitespace))

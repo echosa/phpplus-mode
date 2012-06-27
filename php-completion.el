@@ -2,7 +2,7 @@
 
 ;; Vrsion: 1.0
 ;; Created: 7-5-2011
-;; Last modified: Time-stamp: "2012-05-25 12:36:49 bzwahr"
+;; Last modified: Time-stamp: "2012-06-27 14:11:04 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -12,7 +12,7 @@
 ;;; *****
 
 ;; php-completion.el is a part of the php+-mode suite and is used to
-;; provide functionality to company-mode and other similar utilities.
+;; provide completion functionality.
 
 ;;; *****
 ;;; Usage
@@ -62,14 +62,12 @@
 ;; *********
 ;; FUNCTIONS
 ;; *********
-; compiler definitions
-(declare-function company-grab-symbol "company.el")
 
 (defun php-completion-read-class/interface (type)
   (let ((type-string (symbol-name type)))
     (completing-read (concat 
                       (upcase-initials type-string) " name: ")
-                     (append (company-etags 'candidates "")
+                     (append (php-completion-get-etags)
                              (php-completion 'candidates "" 
                                              '("class"))))))
 
@@ -78,17 +76,6 @@
 
 (defun php-completion-read-interface ()
   (php-completion-read-class/interface 'interface))
-
-(defun php-completion (command &optional arg hash-list &rest ignored)
-  "Company-mode backend for PHP"
-  (case command
-    ('prefix 
-     (and (eq major-mode 'php+-mode)
-          (company-grab-symbol)))
-    ('sorted t)
-    ('candidates 
-     (all-completions (or arg "") (php-completion-candidates hash-list)))
-    ('meta (format "%s\n %s" arg (php-completion-lookup arg)))))
 
 (defun php-completion-build-index ()
   "Builds the master hash table indexing the PHP documentation."
@@ -230,10 +217,16 @@ shows up on the minibuffer."
   (message (php-completion-lookup-at-point)))
 
 (defun php-completion-get-type-list (&optional include-void)
-  (append (company-etags 'candidates "")
+  (append (php-completion-get-etags)
           (php-completion 'candidates "" 
                           '("language.types" "class"))
           `("mixed" ,(when include-void "void"))))
+
+(defun php-completion-get-etags ()
+  (save-excursion
+    (visit-tags-table-buffer)
+    (mapcar 'symbol-name 
+            (remove-if (lambda (x) (eq x 0)) (etags-tags-completion-table)))))
 
 (defun php-completion-customize ()
   "This functions opens the customize buffer for php-completion."

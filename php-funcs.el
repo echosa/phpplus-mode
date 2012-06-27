@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2012-05-25 12:53:21 bzwahr"
+;; Last modified: Time-stamp: "2012-06-27 14:26:29 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -420,7 +420,7 @@ current buffer."
                 ((member answer '("a" "A"))
                  (let ((interface 
                         (completing-read (concat (upcase-initials verb) ": ")
-                                         (append (company-etags 'candidates "")
+                                         (append (php-completion-get-etags)
                                                  (php-completion 'candidates "" 
                                                                  '("class")))
                                          completion-filter nil default)))
@@ -443,7 +443,7 @@ current buffer."
                                                       (abstractp nil 
                                                                  abstractp-p))
   "Read arguments necessary for an interface definition."
-  (let ((class-completion-list (append (company-etags 'candidates "")
+  (let ((class-completion-list (append (php-completion-get-etags)
                                        (php-completion 'candidates "" 
                                                        '("class")))))
     `(,(or name (completing-read "Interface name: " class-completion-list))
@@ -464,7 +464,7 @@ current buffer."
                                                   (finalp nil finalp-p)
                                                   (abstractp nil abstractp-p))
   "Read arguments necessary for a class definition."
-  (let ((class-completion-list (append (company-etags 'candidates "")
+  (let ((class-completion-list (append (php-completion-get-etags)
                                        (php-completion 'candidates "" 
                                                        '("class")))))
     `(,(or name (completing-read "Class name: " class-completion-list))
@@ -1182,9 +1182,9 @@ constants, properties and methods."
                                             (replace-regexp-in-string
                                              "['\"]$" "" raw-val))
                                          raw-val)))))
-               (class-completion-list (append (company-etags 'candidates "")
-                                       (php-completion 'candidates "" 
-                                                       '("class"))))
+               (class-completion-list (append (php-completion-get-etags)
+                                              (php-completion 'candidates "" 
+                                                              '("class"))))
                (extends 
                 (let ((default (php-get-parsed-thing-part 'extends thing)))
                   (cond ((eq thing-type 'class)
@@ -1336,7 +1336,8 @@ constants, properties and methods."
                 (let ((parse (php-parse-current 'method)))
                   (when (and (php-parse-p parse)
                              (php-jump-to-first-statement))
-                    (query-replace replace-argument replace-name nil (point) 
+                    (query-replace (concat "$" replace-argument) 
+                                   (concat "$" replace-name) nil (point) 
                                    (rest (assoc 'end parse)))))))))))))
 
 (defun php-modify-class/interface ()

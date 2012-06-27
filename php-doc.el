@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-26-2010
-;; Last modified: Time-stamp: "2012-05-25 12:36:48 bzwahr"
+;; Last modified: Time-stamp: "2012-06-27 14:06:14 mdwyer"
 ;; Copyright © 2010 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -249,7 +249,7 @@ and interfaces."
   "Gathers arguments for a PHP constant or property PHPDoc block."
   `(,(or desc (read-string "Description: "))
     ,(or (completing-read "Variable type: "
-                          (append (company-etags 'candidates "")
+                          (append (php-completion-get-etags)
                                   (php-completion 'candidates "" 
                                                   '("language.types" "class"))
                                   '("mixed"))))))
@@ -325,7 +325,7 @@ arguments."
                        (concat "$" name)))
                (type (completing-read 
                       "Variable type: " 
-                      (append (company-etags 'candidates "")
+                      (append (php-completion-get-etags)
                               (php-completion 'candidates "" 
                                               '("language.types" "class"))
                               '("callback" "mixed"))))

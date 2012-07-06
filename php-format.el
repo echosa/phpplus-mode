@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
+;; Last modified: Time-stamp: "2012-06-26 15:41:42 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -731,12 +731,19 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
                                           `(,(current-column) 
                                             ,(line-number-at-pos))))
                      (operand-end-col (first operand-end-stats))
-                     (operand-end-line (second operand-end-stats)))
-                (when (or (>= (current-column) max-length)
-                          (and (or (>= operand-end-col max-length)
-                                   (> operand-end-line (line-number-at-pos)))
-                               (not (and (eq pass-name 'boolean+)
-                                         (string= best-match "=")))))
+                     (operand-end-line (second operand-end-stats))
+                     (num-lines (1+ (- operand-end-line (line-number-at-pos)))))
+                (when (and (or (>= operand-end-col max-length)
+                               (and (> num-lines 1)
+                                    (save-excursion
+                                      (catch 'needs-breaking
+                                        (dotimes (i num-lines)
+                                          (end-of-line)
+                                          (when (>= (current-column) max-length)
+                                            (throw 'needs-breaking t))
+                                          (forward-line))))))
+                           (not (and (eq pass-name 'boolean+)
+                                     (string= best-match "="))))
                   (goto-char best-match-begin)
                   (let ((gap (newline-and-indent)))
                     (setf operand-end (+ gap operand-end) 

@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 11-23-2011
-;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
+;; Last modified: Time-stamp: "2012-06-26 17:04:11 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -326,5 +326,10 @@ indentation."
         (backward-sexp)
         (beginning-of-line-text)
         (make-vector 1 (current-column))))))
+
+(defun php-func-decl-cont (element)
+  "This lineup function handles indentation for function
+declaration continuations."
+  (make-vector 1 (* php-basic-offset (php-get-current-sexp-level))))
 
 (provide 'php-lineup)

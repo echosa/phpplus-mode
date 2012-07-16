@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-07-16 16:22:56 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 17:22:57 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -835,10 +835,13 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
                              (> (current-column) max-length))))
                   (and (php-named-function-definitionp) (not multiline-call)))
               (progn
-                (forward-char)
+                (unless (php-named-function-definitionp)
+                  (forward-char))
                 (let ((gap (1+ (newline-and-indent))))
                   (setf bound (+ bound gap) last-point (+ last-point gap)))
-                (unless (looking-back-p (concat "^" ws-re "*"))
+                (when (and (looking-at-p "{")
+                           (not (looking-at-p (concat "{" ws-re "*$"))))
+                  (forward-char)
                   (setf bound (+ 1 bound (newline-and-indent))))
                 (backward-char))))))
     (when (looking-back-p non-ws-re)

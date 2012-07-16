@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-07-16 15:39:59 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 16:14:16 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -288,6 +288,8 @@ setting php-verbose to true."
               (begin (if (integerp begin) begin (php-in-statementp))))
           (when begin
             (goto-char begin)
+            (unless (looking-back-p (concat "^" ws-re "*"))
+              (indent-according-to-mode))
             (let ((change
                    (if (or (looking-at-p "<\\?\\(php\\|=\\)?") 
                            (looking-at-p "\\?>"))
@@ -319,6 +321,8 @@ setting php-verbose to true."
                              (buffer-substring-no-properties begin bound)))
                        (php-format-break-statement-text verbose)
                        (php-delete-horizontal-space)
+                       (unless (looking-at-p (concat ws-re "*$"))
+                         (newline-and-indent))
                        (- (point) old-end)))))
               (goto-char start-pos)
               change)))))))
@@ -822,7 +826,8 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
               (setf bound (+ bound (indent-according-to-mode)))))
           (forward-char)
           (let ((gap (php-delete-horizontal-space)))
-            (setf bound (+ bound gap) last-point (+ last-point gap)))
+            (insert " ")
+            (setf bound (+ bound gap 1) last-point (+ last-point gap 1)))
           (if (or (and (php-anonymous-function-definitionp)
                        (or php-format-break-anonymous-function-always
                            (save-excursion
@@ -830,14 +835,12 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
                              (> (current-column) max-length))))
                   (and (php-named-function-definitionp) (not multiline-call)))
               (progn
+                (forward-char)
                 (let ((gap (1+ (newline-and-indent))))
                   (setf bound (+ bound gap) last-point (+ last-point gap)))
-                (forward-char)
-                (unless (looking-at-p (concat ws-re "*$"))
+                (unless (looking-back-p (concat "^" ws-re "*"))
                   (setf bound (+ 1 bound (newline-and-indent))))
-                (backward-char))
-            (insert " ")
-            (setf bound (1+ bound))))))
+                (backward-char))))))
     (when (looking-back-p non-ws-re)
       (insert " ")
       (setf bound (1+ bound) last-point (1+ last-point)))

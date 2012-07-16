@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-06-24 22:34:38 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 15:14:09 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -188,7 +188,9 @@ used."
 (defun* php-compile-run (whole-project &optional all-groups
                                        &key lint phpcs phpmd phpunit
                                        user-called)
-  "Calls the php-compile-run-cmd function with the given arguments. The php-compile-run-cmd is separate for things like phpunit-single."
+  "Calls the php-compile-run-cmd function with the given
+arguments. The php-compile-run-cmd is separate for things like
+phpunit-single."
   (let ((cmd (php-compile-cmd whole-project all-groups :lint lint
                               :phpcs phpcs :phpmd phpmd :phpunit phpunit)))
     (when user-called
@@ -205,7 +207,8 @@ used."
 (defun php-compile-if-php ()
   "Checks to make sure buffer is a php file, and if so, runs php-compile."
   (when (and (not (file-remote-p buffer-file-name))
-             (member (file-name-extension buffer-file-name) php-test-file-extensions))
+             (member (file-name-extension buffer-file-name) 
+                     php-test-file-extensions))
     (php-compile)))
 
 (defun php-compile-again ()
@@ -224,7 +227,8 @@ used."
                    (concat "for i in `find " (php-project-directory) 
                            " -type f -name \"*.php\" -or -name \"*.phtml\"`; "
                            "do j=`php -l \"$i\"`; done;")
-                 (concat php-executable " -l -f \"" (buffer-file-name) "\"; "))))
+                 (concat php-executable " -l -f \"" (buffer-file-name) 
+                         "\"; "))))
       (php-test-cmd cmd :label "PHP Lint Results:"))))
 
 (defun php-lint ()
@@ -338,11 +342,13 @@ argument."
           (unless all-groups
             (let ((include-groups 
                    (read-string 
-                    "PHPUnit groups to include (comma separated, no spaces)? ")))
+                    (concat "PHPUnit groups to include "
+                            "(comma separated, no spaces)? "))))
               (if (equal "" include-groups)
                   (let ((exclude-groups
                          (read-string
-                          "PHPUnit groups to exclude (comma separated, no spaces)? ")))
+                          (concat "PHPUnit groups to exclude "
+                                  "(comma separated, no spaces)? "))))
                     (unless (equal "" exclude-groups)
                       (concat " --exclude-group " exclude-groups)))
                 (concat " --group " include-groups))))
@@ -350,7 +356,8 @@ argument."
          " --filter "
          (when single-p 
            (concat (rest (assoc 'name (php-parse-current 'method))) " "))
-         (rest (assoc 'name (first (rest (assoc 'classes (php-parse-current 'script))))))
+         (rest (assoc 'name (first (rest (assoc 'classes 
+                                                (php-parse-current 'script))))))
          " "
          (convert-standard-filename (buffer-file-name))))
       "; ")
@@ -455,7 +462,10 @@ point is currently in."
    (when goto-dir (concat "cd " (convert-standard-filename goto-dir) "; "))
    cmd
    "TEMP=$?; if [[ $EXIT_STATUS == 0 ]]; then EXIT_STATUS=$TEMP; fi; "
-   (when goto-dir (concat "cd " (convert-standard-filename (file-name-directory (buffer-file-name))) "; "))))
+   (when goto-dir 
+     (concat "cd " 
+             (convert-standard-filename 
+              (file-name-directory (buffer-file-name))) "; "))))
 
 (defun php-compile-print-divider-command (&optional msg)
   "Creates a series of echo commands that will print a divider across a window"

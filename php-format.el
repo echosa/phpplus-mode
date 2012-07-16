@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-07-16 16:14:16 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 16:22:56 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -1234,7 +1234,10 @@ a line, just go to the next one."
                            (equal (point) (point-at-eol))
                            (re-search-backward non-ws-re (point-at-bol) t)))
                  (newline-and-indent)
-               (when (looking-at-p "[;{]")
+               (when (or (looking-at-p ";")
+                         (and (looking-at-p "{")
+                              (not (looking-back-p (concat "function" ws-re "*"
+                                                           "(.*)" ws-re "*")))))
                  (forward-char (php-format-break-statement)))
                (forward-char)
                (php-delete-horizontal-space)

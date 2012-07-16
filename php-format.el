@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 07-29-2011
-;; Last modified: Time-stamp: "2012-06-26 15:41:42 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 15:39:59 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -869,6 +869,7 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
           (let ((gap (php-delete-horizontal-space)))
             (setf bound (+ bound gap) last-point (+ last-point gap)))))
       (when (or (looking-back-p "return")
+                (looking-back-p "function")
                 (and in-control 
                      (looking-at-p "(")
                      (= sexp-level 1)

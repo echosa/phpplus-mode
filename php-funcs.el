@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-1-2009
-;; Last modified: Time-stamp: "2012-06-27 14:26:29 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 16:57:26 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -421,8 +421,8 @@ current buffer."
                  (let ((interface 
                         (completing-read (concat (upcase-initials verb) ": ")
                                          (append (php-completion-get-etags)
-                                                 (php-completion 'candidates "" 
-                                                                 '("class")))
+                                                 (php-completion-candidates 
+                                                  "" '("class")))
                                          completion-filter nil default)))
                    (unless (nil-or-blank interface)
                      (add-to-list 'interface-list interface t))))
@@ -444,8 +444,8 @@ current buffer."
                                                                  abstractp-p))
   "Read arguments necessary for an interface definition."
   (let ((class-completion-list (append (php-completion-get-etags)
-                                       (php-completion 'candidates "" 
-                                                       '("class")))))
+                                       (php-completion-candidates 
+                                        "" '("class")))))
     `(,(or name (completing-read "Interface name: " class-completion-list))
       ,(if extends-p 
            extends 
@@ -465,8 +465,8 @@ current buffer."
                                                   (abstractp nil abstractp-p))
   "Read arguments necessary for a class definition."
   (let ((class-completion-list (append (php-completion-get-etags)
-                                       (php-completion 'candidates "" 
-                                                       '("class")))))
+                                       (php-completion-candidates 
+                                        "" '("class")))))
     `(,(or name (completing-read "Class name: " class-completion-list))
       ,(if extends-p 
            extends 
@@ -1183,8 +1183,8 @@ constants, properties and methods."
                                              "['\"]$" "" raw-val))
                                          raw-val)))))
                (class-completion-list (append (php-completion-get-etags)
-                                              (php-completion 'candidates "" 
-                                                              '("class"))))
+                                              (php-completion-candidates 
+                                               "" '("class"))))
                (extends 
                 (let ((default (php-get-parsed-thing-part 'extends thing)))
                   (cond ((eq thing-type 'class)

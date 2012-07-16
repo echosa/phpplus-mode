@@ -2,7 +2,7 @@
 
 ;; Vrsion: 1.0
 ;; Created: 7-5-2011
-;; Last modified: Time-stamp: "2012-06-27 14:11:04 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 17:13:14 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -68,14 +68,16 @@
     (completing-read (concat 
                       (upcase-initials type-string) " name: ")
                      (append (php-completion-get-etags)
-                             (php-completion 'candidates "" 
-                                             '("class"))))))
+                             (php-completion-candidates "" '("class"))))))
 
 (defun php-completion-read-class ()
   (php-completion-read-class/interface 'class))
 
 (defun php-completion-read-interface ()
   (php-completion-read-class/interface 'interface))
+
+(defun php-completion-candidates (arg hash-list)
+  (all-completions (or arg "") (php--completion-candidates hash-list)))
 
 (defun php-completion-build-index ()
   "Builds the master hash table indexing the PHP documentation."
@@ -108,7 +110,7 @@
         (when (re-search-forward "class=\\\"classname\\\">\\([^<]*\\)<" nil t)
           (match-string-no-properties 1))))))
         
-(defun php-completion-candidates (&optional hash-list)
+(defun php--completion-candidates (&optional hash-list)
   "Returns a list of all PHP completion candidate symbols."
   (if (and php-manual-path (file-readable-p php-manual-path))
       (php-completion-candidates-local hash-list)
@@ -218,8 +220,7 @@ shows up on the minibuffer."
 
 (defun php-completion-get-type-list (&optional include-void)
   (append (php-completion-get-etags)
-          (php-completion 'candidates "" 
-                          '("language.types" "class"))
+          (php-completion-candidates "" '("language.types" "class"))
           `("mixed" ,(when include-void "void"))))
 
 (defun php-completion-get-etags ()

@@ -2,7 +2,7 @@
 
 ;; Version: 2.0
 ;; Created: 10-26-2010
-;; Last modified: Time-stamp: "2012-06-27 14:06:14 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 16:58:00 mdwyer"
 ;; Copyright © 2010 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>
@@ -250,8 +250,8 @@ and interfaces."
   `(,(or desc (read-string "Description: "))
     ,(or (completing-read "Variable type: "
                           (append (php-completion-get-etags)
-                                  (php-completion 'candidates "" 
-                                                  '("language.types" "class"))
+                                  (php-completion-candidates 
+                                   "" '("language.types" "class"))
                                   '("mixed"))))))
 
 (defun php-doc-constant/property-insert (desc type)
@@ -326,8 +326,8 @@ arguments."
                (type (completing-read 
                       "Variable type: " 
                       (append (php-completion-get-etags)
-                              (php-completion 'candidates "" 
-                                              '("language.types" "class"))
+                              (php-completion-candidates 
+                               "" '("language.types" "class"))
                               '("callback" "mixed"))))
                (value (read-string "Default value: "))
                (value (when (not (string= value "")) value))

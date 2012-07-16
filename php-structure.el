@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 10-03-2011
-;; Last modified: Time-stamp: "2012-07-16 15:33:15 mdwyer"
+;; Last modified: Time-stamp: "2012-07-16 17:12:30 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -1013,51 +1013,53 @@ Optionally stop at BOUND."
                 (statement-begin (or (php-in-statementp)
                                      (save-excursion
                                        (re-search-forward non-ws-re nil t)))))
-            (when statement-begin
-              (let* ((case-statement-begin 
-                      (or (and (<= (+ 5 statement-begin) (point-max))
-                               (string= "case " 
-                                        (buffer-substring-no-properties 
-                                         statement-begin 
-                                         (+ 5 statement-begin))))
-                          (and (<= (+ 8 statement-begin) (point-max))
-                               (string= "default:" 
-                                        (buffer-substring-no-properties 
-                                         statement-begin 
-                                         (+ 8 statement-begin))))))
-                     (statement-end-char (if case-statement-begin ":" ";"))
-                     (enclosure-open (php-find-current-sexp-begin "{"))
-                     (in-enclosure (if (and (integerp enclosure-open) 
-                                            (> enclosure-open statement-begin)) 
-                                       1 0)))
-                (min bound
-                     (or (catch 'done
-                           (while (re-search-forward (concat "[" 
-                                                             statement-end-char 
-                                                             "'\"{}]") nil t)
-                             (backward-char)
-                             (if (php-in-text-structp)
-                                 (php-skip-this-text-struct)
-                               (when (looking-at-p ";")
-                                 (forward-char)
-                                 (unless (or (> in-enclosure 0) 
-                                             (php-in-control-statementp "for" 
-                                                                        t))
-                                   (throw 'done (point))))
-                               (when (looking-at-p "{")
-                                 (if (or (php-anonymous-function-definitionp) 
-                                         (not (zerop in-enclosure)))
-                                     (setf in-enclosure (1+ in-enclosure))
+            (if statement-begin
+                (let* ((case-statement-begin 
+                        (or (and (<= (+ 5 statement-begin) (point-max))
+                                 (string= "case " 
+                                          (buffer-substring-no-properties 
+                                           statement-begin 
+                                           (+ 5 statement-begin))))
+                            (and (<= (+ 8 statement-begin) (point-max))
+                                 (string= "default:" 
+                                          (buffer-substring-no-properties 
+                                           statement-begin 
+                                           (+ 8 statement-begin))))))
+                       (statement-end-char (if case-statement-begin ":" ";"))
+                       (enclosure-open (php-find-current-sexp-begin "{"))
+                       (in-enclosure (if (and (integerp enclosure-open) 
+                                              (> enclosure-open 
+                                                 statement-begin)) 
+                                         1 0)))
+                  (min bound
+                       (or (catch 'done
+                             (while (re-search-forward 
+                                     (concat "[" statement-end-char "'\"{}]") 
+                                     nil t)
+                               (backward-char)
+                               (if (php-in-text-structp)
+                                   (php-skip-this-text-struct)
+                                 (when (looking-at-p ";")
                                    (forward-char)
-                                   (throw 'done (point))))
-                               (when (looking-at-p "}")
-                                 (setf in-enclosure (1- in-enclosure)))
-                               (forward-char)
-                               (when (and (looking-back-p statement-end-char)
-                                          (not (looking-back-p "::"))
-                                          (not (looking-at-p ":"))
-                                          (<= in-enclosure 0))
-                                 (throw 'done (point))))) bound)))))))))))
+                                   (unless (or (> in-enclosure 0) 
+                                               (php-in-control-statementp "for" 
+                                                                          t))
+                                     (throw 'done (point))))
+                                 (when (looking-at-p "{")
+                                   (if (or (php-anonymous-function-definitionp) 
+                                           (not (zerop in-enclosure)))
+                                       (setf in-enclosure (1+ in-enclosure))
+                                     (forward-char)
+                                     (throw 'done (point))))
+                                 (when (looking-at-p "}")
+                                   (setf in-enclosure (1- in-enclosure)))
+                                 (forward-char)
+                                 (when (and (looking-back-p statement-end-char)
+                                            (not (looking-back-p "::"))
+                                            (not (looking-at-p ":"))
+                                            (<= in-enclosure 0))
+                                   (throw 'done (point))))) bound))))
+              identifier-end)))))))
 
 (defun php-is-control-keyword (key)
   "Returns t if KEY is a PHP control structure keyword."

@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 10-03-2011
-;; Last modified: Time-stamp: "2012-05-25 12:49:08 bzwahr"
+;; Last modified: Time-stamp: "2012-07-16 15:33:15 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -797,6 +797,13 @@ the end."
                 (save-match-data
                   (re-search-backward non-ws-re nil t)
                   (forward-char)))
+              (save-match-data
+                (when (and (looking-back-p "function")
+                           (looking-at (concat ws-re "*\\(" 
+                                               (php-type-regexp 'identifier)
+                                               "\\)?(.*)" ws-re "*{")))
+                  (goto-char (1- (match-end 0)))
+                  (setf start (point))))
               (if (and (looking-at-p ")")
                        (> (php-get-current-sexp-level) current-sexp))
                   (forward-char)

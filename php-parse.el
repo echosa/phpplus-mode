@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 2011-07-17
-;; Last modified: Time-stamp: "2012-05-25 12:36:54 bzwahr"
+;; Last modified: Time-stamp: "2012-07-17 16:20:38 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -263,7 +263,9 @@
     (name . ,(match-string-no-properties 7))
     (staticp . ,(string= "static" (match-string-no-properties 4)))
     (visibility . ,(let ((v (match-string-no-properties 6)))
-                   (if (string= "var" v) 'public (intern v))))
+                   (if (or (not (stringp v)) (string= "var" v)) 
+                       'public 
+                     (intern v))))
     (value . ,(match-string-no-properties 9))
     (documentation-text . ,(match-string-no-properties 1))
     (documentation . ,(php-parse-doc-block (match-string-no-properties 1)))))

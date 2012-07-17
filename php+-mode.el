@@ -2,7 +2,7 @@
 
 ;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-06-26 17:00:31 mdwyer"
+;; Last modified: Time-stamp: "2012-07-18 08:38:05 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -130,8 +130,8 @@ underscore."
 ;;; *********
 ;;; Variables
 ;;; *********
-(defvar php+-mode-map nil
-  "Keymap for php+-mode.")
+(defvar php+-mode-map nil "Keymap for php+-mode.")
+(defvar php-mode-abbrev-table (make-abbrev-table) "Initial abbrev table")
 
 ;;; *********
 ;;; FUNCTIONS
@@ -169,8 +169,8 @@ first."
 
 (defun php+-mode-reload (&optional only-revert-source)
   "This function reverts all file buffers and reloads the php+-mode lisp files.
-Optional argument `only-revert-source` tells the function to only revert open
-php+-mode source code file buffers. "
+Optional argument `only-revert-source` tells the function to only
+revert open php+-mode source code file buffers. "
   (interactive "P")
   (save-some-buffers)
   (when (fboundp 'ert-delete-all-tests) (ert-delete-all-tests))
@@ -178,8 +178,8 @@ php+-mode source code file buffers. "
     (dolist (file (remove-if
                    (lambda (x) (string-match "/\\." x))
                    (file-expand-wildcards
-                    (concat (file-name-directory (locate-library "php+-mode.el")) 
-                            subdir "*.el"))))
+                    (concat (file-name-directory 
+                             (locate-library "php+-mode.el")) subdir "*.el"))))
       (load-file file)))
   (let ((rb (current-buffer)))
     (dolist (b (buffer-list))
@@ -197,12 +197,13 @@ php+-mode source code file buffers. "
   (php+-define-menu))
 
 (defun php+-mode-source-line-count ()
-  "This function returns the number of lines of code that make up php+-mode, not
-including unittests or bundled packages."
+  "This function returns the number of lines of code that make up
+php+-mode, not including unittests or bundled packages."
   (interactive)
   (shell-command
    (concat "less " 
-           (file-name-directory (find-lisp-object-file-name 'php+-mode 'function))
+           (file-name-directory (find-lisp-object-file-name 'php+-mode 
+                                                            'function))
            "*.el | grep -v '^[[:space:]]*;\\\|^[^[:space:]]*$' | wc -l"))
   (let ((b (current-buffer))
         count)

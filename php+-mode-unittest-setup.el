@@ -1,6 +1,6 @@
 (defun php+-mode-unittests ()
   (interactive)
-  (ert "php+-test"))
+  (ert "php\\+-test"))
 
 (defalias 'php+-mode-check-yo-self 'php+-mode-unittests)
 

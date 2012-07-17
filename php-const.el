@@ -468,13 +468,20 @@
   (append
    php-font-lock-keywords-1
    (list
+    ;; namespace declarations/usage
+    '("\\<\\(namespace\\|use\\)\\s-+\\(\\sw+\\)"
+      (1 font-lock-keyword-face) 
+      (2 font-lock-type-face nil t))
+
+    '("\\\\\\(namespace\\|use\\)" (1 font-lock-type-face t t))
+    '("\\\\\\([^$]\\(\\sw+\\)\\)" (1 font-lock-type-face nil t))
 
     ;; class declaration
     '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
     ;; handle several words specially, to include following word,
     ;; thereby excluding it from unknown-symbol checks later
-    '("\\<\\(new\\|extends\\|implements\\|instanceof\\)\\(?:\\s-\\|[\n]\\)+\\$?\\(\\(\\(\\sw\\|\\s_\\)+\\(,\\(\\s-\\|[\n]\\)*\\)?\\)+\\)"
+    '("\\<\\(new\\|extends\\|implements\\|instanceof\\)\\(?:\\s-\\|[\n]\\)+\\$?\\(\\(\\(\\sw\\|\\s_\\|\\\\\\)+\\(,\\(\\s-\\|[\n]\\)*\\)?\\)+\\)"
       (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; function declaration
@@ -554,8 +561,11 @@
     '("->\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; ->variable
     '("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
     '("::\\(\\sw+\\>[^(]\\)" . (1 php+-default-face)) ;; class::constant
-    '("\\<\\sw+\\s-*[[(]" . php+-default-face) ;; word( or word[
+    '("\\<\\\\?[^$]\\sw+\\s-*[[(]" . (0 php+-default-face t)) ;; word( or word[
     '("\\<[0-9]+" . php+-default-face) ;; number (also matches word)
+
+    '("new \\(\\sw+\\)(" (1 font-lock-type-face t t))
+    '("new \\(\\\\\\|\\(\\sw+\\)\\)+(" (1 font-lock-type-face t t))
 
     ;; Warn on any words not already fontified
     ;; '("\\<\\sw+\\>" . font-lock-warning-face)

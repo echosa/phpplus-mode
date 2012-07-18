@@ -108,7 +108,7 @@ will also hide any accompanying doc blocks.  Optionally, SHOW
 instead of hide.  You may also hide JUST-DOC-BLOCKS and/or
 FORCE-DOC-BLOCKS.  This requires hideshow."
   (interactive)
-  (when (and (fboundp 'hs-hide-level)
+  (when (and hs-minor-mode
              (buffer-file-name)
              (not (member (file-name-extension (buffer-file-name) t) 
                           php-hide-show-ignore-extensions)))
@@ -140,7 +140,7 @@ FORCE-DOC-BLOCKS.  This requires hideshow."
 (defun php-show-all ()
   "This is just a wrapper around hideshow's hs-show-all.
 We have this wrapper to make sure that hide-show is loaded first."
-  (when (fboundp 'hs-show-all)
+  (when hs-minor-mode
     (hs-show-all)))
 
 (defun php-get-named-things (&optional types)
@@ -220,7 +220,8 @@ Returns (point)."
     (goto-char (rest (assq 'begin struct))))
   (when (looking-at-p "/\\*")
     (forward-char 3)
-    (when (and (hs-overlay-at (point)) php-jump-show-hidden (not no-show))
+    (when (and hs-minor-mode (hs-overlay-at (point)) php-jump-show-hidden 
+               (not no-show))
       (hs-show-block)
       (setq php-jump-showed-hidden t))
     (re-search-forward (concat "\\*/" ws-re "*") nil t))
@@ -241,13 +242,14 @@ Returns (point)."
             (catch 'done
               (while (< (point) end)
                 (forward-char)
-                (when (and (hs-overlay-at (point)) php-jump-show-hidden 
-                           (not no-show))
+                (when (and hs-minor-mode (hs-overlay-at (point)) 
+                           php-jump-show-hidden (not no-show))
                   (hs-show-block)
                   (setq php-jump-showed-hidden t)
                   (throw 'done (point)))))))))
     (re-search-forward "[;{]" nil t)
-    (when (and (hs-overlay-at (point)) php-jump-show-hidden (not no-show))
+    (when (and hs-minor-mode (hs-overlay-at (point)) php-jump-show-hidden 
+               (not no-show))
       (hs-show-block)
       (setq php-jump-showed-hidden t))
     (if (= (char-before) ?\;)
@@ -264,13 +266,15 @@ Returns (point)."
                                     php-jump-to-previous-thing))
              php-jump-showed-hidden)
     (let ((parse (php-parse-current 'method)))
-      (when (and (eq 'method (rest (assq 'type parse)))
+      (when (and hs-minor-mode
+                 (eq 'method (rest (assq 'type parse)))
                  (not (rest (assq 'abstractp parse))))
         (hs-hide-block)
         (re-search-backward ")" nil t)
         (hs-hide-block)
         (setq php-jump-showed-hidden nil))
-      (when (and php-hide-show-hide-doc-blocks
+      (when (and hs-minor-mode
+                 php-hide-show-hide-doc-blocks
                  (rest (assq 'documentation parse)))
         (save-excursion
           (goto-char (rest (assq 'begin parse)))

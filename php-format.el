@@ -141,10 +141,11 @@ all."
     (when (php-parse-p parse)
       (save-excursion
         (goto-char (rest (assoc 'begin parse)))
-        (when (hs-already-hidden-p)
+        (when (and hs-minor-mode (hs-already-hidden-p))
           (setf current-doc-hs-status t))
         (php-jump-to-first-statement nil t)
-        (setf current-innard-hs-status (hs-already-hidden-p)))
+        (setf current-innard-hs-status 
+              (and hs-minor-mode (hs-already-hidden-p))))
       (php-kill-current type)
       (let* ((type (rest (assoc 'type parse)))
              (name (rest (assoc 'name parse)))
@@ -167,9 +168,9 @@ all."
           (sit-for sit-for))
         (save-excursion
           (goto-char pos)
-          (when current-doc-hs-status (hs-hide-block))
+          (when (and hs-minor-mode current-doc-hs-status) (hs-hide-block))
           (php-jump-to-first-statement nil t)
-          (when current-innard-hs-status
+          (when (and hs-minor-mode current-innard-hs-status)
             (hs-hide-block)))))))
 
 (defun php-update-innards-bounds (innards start delta updatep decision-point)
@@ -217,11 +218,12 @@ not sit at all."
                 (goto-char (rest (assoc 'begin current-innard)))
                 (when (looking-at-p ws-re)
                   (re-search-forward non-ws-re nil t))
-                (when (hs-already-hidden-p)
+                (when (and hs-minor-mode (hs-already-hidden-p))
                   (setf current-doc-hs-status t))
                 (save-excursion
                   (php-jump-to-first-statement nil t)
-                  (setf current-innard-hs-status (hs-already-hidden-p)))
+                  (setf current-innard-hs-status 
+                        (and hs-minor-mode (hs-already-hidden-p))))
                 (let* ((old-innard (php-kill-current current-type t))
                        (old-begin (rest (assoc 'begin old-innard)))
                        (old-end (rest (assoc 'end old-innard)))
@@ -239,8 +241,9 @@ not sit at all."
                   (save-excursion
                     (let ((innard (elt innards i)))
                       (goto-char (rest (assoc 'begin innard)))
-                      (when current-doc-hs-status (hs-hide-block))
-                      (when current-innard-hs-status
+                      (when (and hs-minor-mode current-doc-hs-status)
+                        (hs-hide-block))
+                      (when (and hs-minor-mode current-innard-hs-status)
                         (php-jump-to-first-statement innard t)
                         (hs-hide-block))))
                   (when (not (looking-back-p (concat "^" ws-re "*")))

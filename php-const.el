@@ -485,7 +485,7 @@
       (1 font-lock-keyword-face) (2 font-lock-type-face))
 
     ;; function declaration
-    '("\\<\\(function\\)\\s-+&?\\(\\sw+\\)\\s-*("
+    '("\\<\\(function\\)\\s-+&?\\(\\sw+\\)?\\s-*("
       (1 font-lock-keyword-face)
       (2 font-lock-function-name-face nil t))
 
@@ -561,7 +561,7 @@
     '("->\\(\\sw+\\)" (1 font-lock-variable-name-face)) ;; ->variable
     '("\\(\\sw+\\)::\\sw+\\s-*(?" . (1 font-lock-type-face)) ;; class::member
     '("::\\(\\sw+\\>[^(]\\)" . (1 php+-default-face)) ;; class::constant
-    '("\\<\\\\?[^$]\\sw+\\s-*[[(]" . (0 php+-default-face t)) ;; word( or word[
+    '("\\<\\\\?[^$]\\sw+[[(]" . (0 php+-default-face t)) ;; word( or word[
     '("\\<[0-9]+" . php+-default-face) ;; number (also matches word)
 
     '("new \\(\\sw+\\)(" (1 font-lock-type-face t t))

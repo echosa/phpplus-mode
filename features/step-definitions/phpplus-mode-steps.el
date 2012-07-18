@@ -34,3 +34,15 @@
           (assert (= current-col column-num) nil
                   "Expected column %d, actually at column %d."
                   column-num current-col))))
+
+(Then "^I should see the face \\(.+\\)$"
+      (lambda (face-string)
+        (let ((expected-face (intern face-string))
+              (actual-face (get-text-property (point) 'face)))
+          (assert (eq expected-face actual-face) nil
+                  "Expected face %s, actual face is %s."
+                  expected-face actual-face))))
+
+(When "^I go to the beginning of line text$"
+      (lambda ()
+        (beginning-of-line-text)))

@@ -13,7 +13,8 @@
          php-format-break-all-method-chain-links
          php+-verbose)
      (with-temp-buffer
-       (insert-file (concat *php+-mode-test-dir* ,(or correct-filename filename)))
+       (insert-file (concat *php+-mode-test-dir* 
+                            ,(or correct-filename filename)))
        (setq correct-buffer-string (buffer-string))
        (delete-region (point-min) (point-max))
        (insert-file (concat *php+-mode-test-dir* ,filename))
@@ -35,7 +36,8 @@ works properly."
   (let* (php-blank-line-at-end-of-class
          (test-buffer-string
           (with-temp-buffer
-            (insert-file (concat *php+-mode-test-dir* "method-insert-before.php"))
+            (insert-file (concat *php+-mode-test-dir* 
+                                 "method-insert-before.php"))
             (php+-mode)
             (php-insert-method "testMethod" 'public nil nil nil nil 
                                :var-list nil 

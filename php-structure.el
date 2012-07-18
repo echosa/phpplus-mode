@@ -2,7 +2,7 @@
 
 ;; Version: 1.0
 ;; Created: 10-03-2011
-;; Last modified: Time-stamp: "2012-07-16 17:12:30 mdwyer"
+;; Last modified: Time-stamp: "2012-07-18 10:25:33 mdwyer"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s): 
 ;; Michael Dwyer <mdwyer@ehtech.in>
@@ -912,6 +912,7 @@ definition is ANONYMOUSP."
       (when (integerp pos)
         (goto-char pos))
       (let* ((starting-point (point))
+             (starting-block-level (php-get-current-sexp-level "{"))
              (in-comment (php-in-commentp))
              (in-start-tag (save-excursion
                              (cond ((looking-at-p non-ws-re)
@@ -967,7 +968,12 @@ definition is ANONYMOUSP."
                                                (backward-sexp))
                                               ((looking-back-p "{") 
                                                (backward-char)))
-                                        (php-anonymous-function-definitionp)))
+                                        (when 
+                                            (> (save-excursion
+                                                 (forward-char)
+                                                 (php-get-current-sexp-level "{"))
+                                                 starting-block-level)
+                                          (php-anonymous-function-definitionp))))
                                     (when (looking-back-p ":")
                                       (cond ((looking-back-p "::")
                                              (- (point) 2))

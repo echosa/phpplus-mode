@@ -708,7 +708,9 @@ php+-mode, not including unittests or bundled packages."
 
 \\{php+-mode-map}"
   (php+-mode-setup)
+  (set (make-local-variable 'indent-tabs-mode) nil)
   (c-add-language 'php+-mode 'c-mode)
+  (set (make-local-variable 'c-basic-offset) 4)
   (set (make-local-variable 'c-opt-cpp-start) php-tags-key)
   (set (make-local-variable 'c-opt-cpp-prefix) php-tags-key)
   (c-set-offset 'cpp-macro 0)

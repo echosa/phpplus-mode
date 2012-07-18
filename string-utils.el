@@ -2,7 +2,6 @@
 
 ;; Version: 1.0
 ;; Created: 2011-07-17
-;; Last modified: Time-stamp: "2012-05-25 12:16:09 bzwahr"
 ;; Copyright © 2011 Michael Dwyer
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>

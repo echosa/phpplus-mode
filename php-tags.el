@@ -2,7 +2,6 @@
 
 ;; Version: 3.0
 ;; Created: 6-15-2009
-;; Last modified: Time-stamp: "2012-05-25 12:36:50 bzwahr"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s): 
 ;; Brian Zwahr <echosa@gmail.com>

@@ -2,7 +2,6 @@
 
 ;; Version: 2.1
 ;; Created: 8-25-2009
-;; Last modified: Time-stamp: "2012-07-18 08:38:05 mdwyer"
 ;; Copyright © 2009 Brian Zwahr
 ;; Author(s):
 ;; Michael Dwyer <mdwyer@ehtech.in>

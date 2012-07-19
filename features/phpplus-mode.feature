@@ -45,3 +45,108 @@ Feature: Font Locking
     And I go to line "11"
     And I go to the beginning of line text
     Then I should see the face font-lock-keyword-face
+
+Feature: Line Breaking
+  In order to have proper automatic line breaking
+ 
+  Scenario: ERT breaking test 1
+    Given I am in buffer "Test_Breaking.php"
+    And I turn on php+-mode
+    And I insert:
+    """
+    <?php
+    class Zfmode_Test_Breaking
+    {
+        public function method1()
+        {
+            $person = new Occhealth_Model_Personnel($this->getRequest()->getParams());
+        }
+    }
+    """
+    And I go to line "6"
+    And I press "C-c b s"
+    Then I should see:
+    """
+            $person = new Occhealth_Model_Personnel(
+                $this->getRequest()->getParams()
+            );
+    """
+    And I clear the buffer
+    And I insert:
+    """
+    <?php
+    class Zfmode_Test_Breaking
+    {
+        public function method2()
+        {
+            $this->someCall('someString');
+
+            $select = $this->select()->where('person = ?', $person->pk)->order('date DESC');
+        }
+    }
+    """
+    And I go to line "8"
+    And I press "C-c b s"
+    Then I should see:
+    """
+            $select = $this->select()->where('person = ?', $person->pk)
+                ->order('date DESC');
+    """
+    And I clear the buffer
+    And I insert:
+    """
+    <?php
+    class Zfmode_Test_Breaking
+    {
+        private function _method3()
+        {
+            $string = 'Is Certified: ' . $this->view->yesOrNo($location->isCertified) . '<br />Date Certified: ';
+        }
+    }
+    """
+    And I go to line "6"
+    And I press "C-c b s"
+    Then I should see:
+    """
+            $string = 'Is Certified: '
+                . $this->view->yesOrNo($location->isCertified)
+                . '<br />Date Certified: ';
+    """
+
+  Scenario ERT breaking test 2
+    Given I am in buffer "Test_Breaking2.php"
+    And I turn on php+-mode
+    And I insert:
+    """
+    <?php
+    class Occhealth_PersonnelController extends Zend_Controller_Action
+    {
+        public function addAction()
+        {
+            $this->view->form = new Occhealth_Form_Personnel();
+            if ($this->getRequest()->isPost()) {
+                if ($this->view->form->isValid($this->getRequest()->getParams())) {
+                    $person = new Occhealth_Model_Personnel($this->getRequest()->getParams());
+                    $person->save();
+                    $this->_helper->flashMessenger($person->getName() . ' added to Occupation Health.');
+                }
+            }
+        }
+    }
+    """
+    And I go to line "11"
+    And I press "C-c b s"
+    Then I should see:
+    """
+                    $this->_helper->flashMessenger(
+                        $person->getName() . ' added to Occupation Health.'
+                    );
+    """
+    And I go to line "9"
+    And I press "C-c b s"
+    Then I should see:
+    """
+                    $person = new Occhealth_Model_Personnel(
+                        $this->getRequest()->getParams()
+                    );
+    """

@@ -1,7 +1,8 @@
 (require 'php+-mode-unittest-setup)
 
 (defvar *php+-mode-test-dir* (concat (file-name-directory
-                                    (symbol-file 'php+-mode-unittests)) "tests/"))
+                                    (symbol-file 'php+-mode-unittests)) 
+                                     "tests/"))
 (add-to-list 'load-path *php+-mode-test-dir*)
 (add-to-list 'load-path (concat *php+-mode-test-dir* "ert/"))
 (require 'ert)
@@ -69,14 +70,6 @@ works properly."
     (insert-file (concat *php+-mode-test-dir* "Test_Breaking.php"))
     (should (equal '("method1" "method2" "_method3")
                    (php-get-thing-names 'methods)))))
-
-(ert-deftest php+-test-breaking ()
-  "Tests the breaking (or not breaking) of statements."
-  (php+-break-test "Test_Breaking.php"))
-
-(ert-deftest php+-test-breaking-2 ()
-  "Tests the breaking (or not breaking) of statements."
-  (php+-break-test "Test_Breaking2.php"))
 
 (ert-deftest php+-test-breaking-3 ()
   "Tests the breaking (or not breaking) of statements."

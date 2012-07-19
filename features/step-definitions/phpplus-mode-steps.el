@@ -46,3 +46,20 @@
 (When "^I go to the beginning of line text$"
       (lambda ()
         (beginning-of-line-text)))
+
+(When "^I print the buffer string$"
+      (lambda ()
+        (print (buffer-substring-no-properties (point-min) (point-max)))))
+
+(When "^I print the buffer string from here$"
+      (lambda ()
+        (print (buffer-substring-no-properties (point) (point-max)))))
+
+(When "^I print the buffer string to here$"
+      (lambda ()
+        (print (buffer-substring-no-properties (point-min) (point)))))
+
+(When "^I print the debug info$"
+      (lambda ()
+        (print major-mode)
+        (print c-basic-offset)))

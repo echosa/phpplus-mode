@@ -71,14 +71,6 @@ works properly."
     (should (equal '("method1" "method2" "_method3")
                    (php-get-thing-names 'methods)))))
 
-(ert-deftest php+-test-breaking-3 ()
-  "Tests the breaking (or not breaking) of statements."
-  (php+-break-test "Test_Breaking3.php"))
-
-(ert-deftest php+-test-breaking-3-1 ()
-  "Tests the breaking (or not breaking) of statements."
-  (php+-break-test "Test_Breaking3-1.php"))
-
 (ert-deftest php+-test-breaking-3-2 ()
   "Tests the breaking (or not breaking) of statements."
   (php+-break-test "Test_Breaking3-2.php"))

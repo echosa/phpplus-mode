@@ -47,6 +47,11 @@
       (lambda ()
         (beginning-of-line-text)))
 
+(When "^I go to the beginning of text on line \\([0-9]+\\)$"
+      (lambda (line-num)
+        (When "I go to line \"%s\"" line-num)
+        (When "I go to the beginning of line text")))
+
 (When "^I print the buffer string$"
       (lambda ()
         (print (buffer-substring-no-properties (point-min) (point-max)))))
@@ -72,3 +77,4 @@
       (lambda (line-num)
         (When "I go to line \"%s\"" line-num)
         (php-format-break-statement)))
+

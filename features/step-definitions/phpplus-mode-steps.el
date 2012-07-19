@@ -63,3 +63,12 @@
       (lambda ()
         (print major-mode)
         (print c-basic-offset)))
+
+(When "^I break the current statement$"
+      (lambda ()
+        (php-format-break-statement)))
+
+(When "^I break the statement at line \\([0-9]+\\)$"
+      (lambda (line-num)
+        (When "I go to line \"%s\"" line-num)
+        (php-format-break-statement)))

@@ -1251,9 +1251,13 @@ a line, just go to the next one."
                          (and (looking-at-p "{")
                               (not (looking-back-p (concat "function" ws-re "*"
                                                            "(.*)" ws-re "*")))))
-                 (forward-char (php-format-break-statement)))
+                 (let ((start-pos (point)))
+                   (goto-char (+ start-pos (php-format-break-statement)))))
                (forward-char)
                (php-delete-horizontal-space)
+               (when (looking-at-p "}")
+                 (save-excursion
+                   (newline-and-indent)))
                (when at-eof
                  (save-excursion
                    (newline)))

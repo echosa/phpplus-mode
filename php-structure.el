@@ -800,7 +800,7 @@ the end."
                 (when (and (looking-back-p "function")
                            (looking-at (concat ws-re "*\\(" 
                                                (php-type-regexp 'identifier)
-                                               "\\)?(.*)" ws-re "*{")))
+                                               "\\)?([^)]*)" ws-re "*{")))
                   (goto-char (1- (match-end 0)))
                   (setf start (point))))
               (if (and (looking-at-p ")")
@@ -1012,7 +1012,8 @@ Optionally stop at BOUND."
             (in-comment (php-in-commentp))
             (identifier-end (php-skip-this-identifier)))
         (if (or (integerp in-comment)
-                (looking-back-p "<\\?\\(php\\|=\\)?"))
+                (looking-back-p "<\\?\\(php\\|=\\)?")
+                (and (looking-back-p "}") (not (php-in-statementp))))
             identifier-end
           (let (in-string 
                 (statement-begin (or (php-in-statementp)

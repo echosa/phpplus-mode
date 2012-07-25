@@ -75,6 +75,12 @@ one line."
   :group 'php-format
   :type 'boolean)
 
+(defcustom php-format-break-function-call-like-definition t
+  "Whether to break function definition parameters one per line
+just like function calls.  This was added to abide by PSR-2."
+  :group 'php-format
+  :type 'boolean)
+
 (defcustom php-format-break-all-for-semicolons nil
   "Whether to break on subsequent semicolons of a for statement
 always after breaking on the first semicolon, even if the rest of
@@ -906,7 +912,8 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
                      (save-excursion 
                        (re-search-forward 
                         (concat "function" ws-re "*(") sexp-end t))))
-            (if (or (not (php-function-definitionp))
+            (if (or (or php-format-break-function-call-like-definition 
+                        (not (php-function-definitionp)))
                     (and (> (php-get-current-sexp-level) 0)
                          (looking-back-p "array")))
                 (let* ((function-call 
@@ -948,7 +955,8 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
            (multilinep (or (>= (current-column) max-length)
                            (>= atom-end-col max-length)
                            (not (= current-line sexp-begin-line)))))
-      (if (and multilinep (not in-function-def))
+      (if (and multilinep (or php-format-break-function-call-like-definition
+                              (not in-function-def)))
           (setf bound (+ 1 bound (newline-and-indent)))
         (insert " ")
         (setf bound (1+ bound))))))

@@ -81,7 +81,8 @@ Feature: Line Breaking
     And I break the statement at line 4
     Then I should see:
     """
-        static public function camtasiaRelayMetadata(File $parent_file,
+        static public function camtasiaRelayMetadata(
+            File $parent_file,
             File $file
         ) {
     """

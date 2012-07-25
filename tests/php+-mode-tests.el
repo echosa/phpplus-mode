@@ -7,24 +7,6 @@
 (add-to-list 'load-path (concat *php+-mode-test-dir* "ert/"))
 (require 'ert)
 
-(defmacro php+-break-test (filename &optional correct-filename)
-  "Macro to setup a php+-mode breaking unit test"
-  `(let (test-buffer-string
-         correct-buffer-string
-         php-format-break-all-method-chain-links
-         php+-verbose)
-     (with-temp-buffer
-       (insert-file (concat *php+-mode-test-dir* 
-                            ,(or correct-filename filename)))
-       (setq correct-buffer-string (buffer-string))
-       (delete-region (point-min) (point-max))
-       (insert-file (concat *php+-mode-test-dir* ,filename))
-       (php+-mode)
-       (php-format-clean-up-script)
-       (delete-trailing-whitespace)
-       (setq test-buffer-string (buffer-string))
-       (should (string= test-buffer-string correct-buffer-string)))))
-
 (ert-deftest php+-test-php-initial->scope ()
   "Tests that php-initial->scope returns the correct results."
   (should (and (eq 'public (php-initial->scope "u"))
@@ -67,19 +49,23 @@ works properly."
 (ert-deftest php+-test-php-get-method-names ()
   "Tests that php-get-thing-names returns methods correctly."
   (with-temp-buffer
-    (insert-file (concat *php+-mode-test-dir* "Test_Breaking.php"))
+    (insert 
+     "<?php
+    class Zfmode_Test_Breaking
+    {
+        public function method1()
+        {
+            $person = new Occhealth_Model_Personnel($this->getRequest()->getParams());
+        }
+        public function method2()
+        {
+            $select = $this->select()->where('person = ?', $person->pk)->order('date DESC');
+        }
+        private function _method3()
+        {
+            $string = 'Is Certified: ' . $this->view->yesOrNo($location->isCertified) . '<br />Date Certified: ';
+        }
+    }
+")
     (should (equal '("method1" "method2" "_method3")
                    (php-get-thing-names 'methods)))))
-
-(ert-deftest php+-test-breaking-3-2 ()
-  "Tests the breaking (or not breaking) of statements."
-  (php+-break-test "Test_Breaking3-2.php"))
-
-(ert-deftest php+-test-breaking-4 ()
-  "Tests the breaking (or not breaking) of statements."
-  (php+-break-test "Test_Breaking4.php"))
-
-(ert-deftest php+-test-breaking-5 ()
-  "Tests the breaking (or not breaking) of statements."
-  (php+-break-test "Test_Breaking5.php" 
-                 "Test_Breaking5-correct.php"))

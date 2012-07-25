@@ -72,7 +72,9 @@ Feature: Line Breaking
     And I break the statement at line 28
     Then I should see:
     """
-        static protected function processMedia(File $file, File $parentFile,
+        static protected function processMedia(
+            File $file,
+            File $parentFile,
             $fileNameParts
         ) {
     """
@@ -123,13 +125,12 @@ Feature: Line Breaking
     And I break the statement at line 7
     Then I should see:
     """
-                $status->addMessage(
+            $status->addMessage(
                 LOG_DEBUG,
                 'Matches: '
                 . dump_var(
                     array_map(
-                        function($x)
-                        {
+                        function ($x) {
                             return $x->file_name;
                         },
                         $matches
@@ -155,7 +156,8 @@ Feature: Line Breaking
     And I break the statement at line 4
     Then I should see:
     """
-        static protected function moveFileToRecorderAccount(File $file,
+        static protected function moveFileToRecorderAccount(
+            File $file,
             User $recorder
         ) {
     """    

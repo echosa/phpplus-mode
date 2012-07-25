@@ -1049,8 +1049,11 @@ number of characters added.  Optionally STRIP-NEWLINES as well."
               (backward-char)
               (let ((gap (php-delete-horizontal-space nil t)))
                 (setf bound (+ bound gap) last-point (+ last-point gap))))
-            (insert " ")
-            (setf bound (1+ bound) last-point (1+ last-point))))))
+            (let ((gap (if in-function-def 
+                           (1+ (newline-and-indent))
+                         (insert " ")
+                         1)))
+              (setf bound (+ gap bound) last-point (+ gap last-point)))))))
     (when (and arrayp php-format-align-array-double-arrows)
       (setf bound (+ bound (align-on "=>"))))
     (forward-char)))

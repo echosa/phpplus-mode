@@ -58,10 +58,15 @@
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
                        (if (fboundp 'flymake-create-temp-copy)
                            'flymake-create-temp-copy
-                         'flymake-create-temp-intemp))))
-      `(,php+-flymake-wrapper (,temp-file ,(concat "--standard=" phpcs-standard)
-                                          ,(symbol-name phpmd-format)
-                                          ,(mapconcat 'symbol-name phpmd-rulesets ","))))))
+                         'flymake-create-temp-intemp)))
+           (args (append (when (member 'lint php+-flymake-tests) '("-l"))
+                         (when (member 'lint php+-flymake-tests) 
+                           `("-c" ,phpcs-standard))
+                         (when (member 'lint php+-flymake-tests) 
+                           `("-m" ,(symbol-name phpmd-format) 
+                             ,(mapconcat 'symbol-name phpmd-rulesets ",")))
+                         `(,temp-file))))
+      `(,php+-flymake-wrapper ,args))))
 
 (defun flymake-create-temp-intemp (file-name prefix)
   "Return file name in temporary directory for checking

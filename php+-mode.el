@@ -60,6 +60,7 @@
 (require 'php-test)
 (require 'php-utils)
 (require 'string-utils)
+(require 'php+-flymake)
 (require 'php+-zf)
 
 ;;; *********

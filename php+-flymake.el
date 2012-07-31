@@ -102,7 +102,12 @@
                   '("\\([^:]*\\):\\([0-9]+\\)\\s-+\\(.*\\)" 1 2 3 3))
      (setf (car (flymake-get-file-name-mode-and-masks "test.php")) 
            'php+-flymake-init)
-     (when php+-flymake-enable
-       (add-hook 'php+-mode-hook (lambda () (flymake-mode 1)) t))))
+     (add-hook 'php+-mode-hook 'php+-flymake-hook t)))
+
+(defun php+-flymake-hook ()
+  (when (and php+-flymake-enable  
+             (buffer-file-name) 
+             (not (file-remote-p (buffer-file-name))))
+    (flymake-mode 1)))
 
 (provide 'php+-flymake)

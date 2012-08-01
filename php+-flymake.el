@@ -105,6 +105,8 @@
                   '("\\([^:]*\\):\\([0-9]+\\)\\s-+\\(.*\\)" 1 2 3 3))
      (setf (car (flymake-get-file-name-mode-and-masks "test.php")) 
            'php+-flymake-init)
+     (add-to-list 'flymake-allowed-file-name-masks 
+                  '("\\.inc\\'" php+-flymake-init))
      (add-hook 'php+-mode-hook 'php+-flymake-hook t)))
 
 (defun php+-flymake-hook ()

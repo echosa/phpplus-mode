@@ -65,8 +65,11 @@
                          (when (member 'lint php+-flymake-tests) 
                            `("-m" ,(symbol-name phpmd-format) 
                              ,(mapconcat 'symbol-name phpmd-rulesets ",")))
-                         `(,temp-file))))
-      `(,php+-flymake-wrapper ,args))))
+                         `(,temp-file)))
+           (dir (file-name-directory temp-file))
+           (command `(,php+-flymake-wrapper ,args ,dir)))
+      (flymake-log 3 "php+-flymake command: %s" command)
+      command)))
 
 (defun flymake-create-temp-intemp (file-name prefix)
   "Return file name in temporary directory for checking
@@ -105,9 +108,11 @@
      (add-hook 'php+-mode-hook 'php+-flymake-hook t)))
 
 (defun php+-flymake-hook ()
-  (when (and php+-flymake-enable  
-             (buffer-file-name) 
-             (not (file-remote-p (buffer-file-name))))
+  (when php+-flymake-enable
+    ;; We are seeing crashes on Emacs 24 Cocoa when this is enabled.
+    ;; Reference: 
+    ;; http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
+    (setf flymake-gui-warnings-enabled nil)
     (flymake-mode 1)))
 
 (provide 'php+-flymake)

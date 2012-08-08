@@ -205,7 +205,7 @@ struct.  Optionally restrict TYPE according to the semantics of
     (when (php-parse-p parse)
       (goto-char (rest (assq 'begin parse)))
       (goto-char (+ 1 (point) (length (rest (assq 'documentation-text parse)))))
-      (beginning-of-line-text)
+      (beginning-of-line-non-whitespace)
       (point))))
 
 (defun php-jump-to-first-statement (&optional struct no-show)

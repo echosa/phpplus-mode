@@ -60,9 +60,9 @@
                            'flymake-create-temp-copy
                          'flymake-create-temp-intemp)))
            (args (append (when (member 'lint php+-flymake-tests) '("-l"))
-                         (when (member 'lint php+-flymake-tests) 
+                         (when (member 'phpcs php+-flymake-tests) 
                            `("-c" ,phpcs-standard))
-                         (when (member 'lint php+-flymake-tests) 
+                         (when (member 'phpmd php+-flymake-tests) 
                            `("-m" ,(symbol-name phpmd-format) 
                              ,(mapconcat 'symbol-name phpmd-rulesets ",")))
                          `(,temp-file)))

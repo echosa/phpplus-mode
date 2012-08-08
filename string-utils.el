@@ -364,5 +364,13 @@ indentation and FILL-REGEX at the beginning of STR."
       (mapconcat (lambda (str) 
                    (replace-regexp-in-string "[[:space:]]+$" "" str)) 
                  lines "\n")))
-        
+
+(defun beginning-of-line-non-whitespace (&optional n)
+  "Moves to the first non-whitespace character after moving
+forward N lines, without all the exceptions that
+``beginning-of-line-text'' has."
+  (beginning-of-line n)
+  (when (re-search-forward non-ws-re nil t)
+    (backward-char)))
+
 (provide 'string-utils)

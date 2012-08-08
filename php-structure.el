@@ -979,7 +979,7 @@ definition is ANONYMOUSP."
                                             ((or (and (looking-back-p ":") 
                                                       (looking-at-p ":"))
                                                  (save-excursion
-                                                   (beginning-of-line-text)
+                                                   (beginning-of-line-non-whitespace)
                                                    (not 
                                                     (or (looking-at-p 
                                                          "case ")

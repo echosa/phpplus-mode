@@ -44,7 +44,7 @@
 (defun php-cpp-macro-lineup (element)
   "This lineup function handles cpp-macro elements."
   (save-excursion
-    (beginning-of-line-text)
+    (beginning-of-line-non-whitespace)
     (make-vector 1 (or (when (looking-at-p "\\?>")
                          (* (php-get-current-sexp-level "{") 
                             php-basic-offset))
@@ -131,7 +131,7 @@
   "This lineup function handles bare HTML and docs (which are
 syntax classed as comments."
   (save-excursion
-    (beginning-of-line-text)
+    (beginning-of-line-non-whitespace)
     (if (php-in-commentp)
         (c-lineup-C-comments element)
       (if (looking-at-p "<\\?")
@@ -197,7 +197,7 @@ syntax classed as comments."
                          php-basic-offset
                        php-html-basic-offset)))
               (save-excursion
-                (beginning-of-line-text 0)
+                (beginning-of-line-non-whitespace 0)
                 (current-column)))))
       tag-col)))
 
@@ -242,14 +242,14 @@ syntax classed as comments."
   "This lineup function handles defun close lineup."
   (save-excursion
     (goto-char (c-langelem-pos element))
-    (beginning-of-line-text)
+    (beginning-of-line-non-whitespace)
     (make-vector 1 (current-column))))
 
 (defun php-statement-lineup (element)
   "This lineup function handles a bug in switch statement
 indentation."
   (save-excursion
-    (beginning-of-line-text)
+    (beginning-of-line-non-whitespace)
     (cond ((php-in-text-structp)
            (if (looking-at-p doc-end-tag-re) (make-vector 1 0) 0))
           ((looking-at-p "<\\?\\(php\\|=\\)?") -1)
@@ -264,12 +264,12 @@ indentation."
   "This lineup function handles indentation for statements."
   (save-excursion
     (save-match-data
-      (beginning-of-line-text)
+      (beginning-of-line-non-whitespace)
       (cond ((php-inside-text-structp) 0)
             ((looking-at-p "[\]})]")
              (forward-char)
              (backward-sexp)
-             (beginning-of-line-text)
+             (beginning-of-line-non-whitespace)
              (make-vector 1 (current-column)))
             ((looking-at-p "<\\?\\(php\\|=\\)?")
              (re-search-backward "\\?>" nil t)
@@ -294,7 +294,7 @@ indentation."
   "This lineup function handles indentation for brace list intros."
   (save-excursion
     (when (re-search-backward "\{" nil t)
-      (beginning-of-line-text)
+      (beginning-of-line-non-whitespace)
       (make-vector 1 (+ php-basic-offset (current-column))))))
 
 (defun php-brace-list-entry-lineup (element)
@@ -323,7 +323,7 @@ indentation."
     (save-match-data
       (when (re-search-forward "}" nil t)
         (backward-sexp)
-        (beginning-of-line-text)
+        (beginning-of-line-non-whitespace)
         (make-vector 1 (current-column))))))
 
 (defun php-func-decl-cont (element)

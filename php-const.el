@@ -564,8 +564,7 @@
     '("\\<\\\\?[^$]\\sw+[[(]" . (0 php+-default-face t)) ;; word( or word[
     '("\\<[0-9]+" . php+-default-face) ;; number (also matches word)
 
-    '("new \\(\\sw+\\)(" (1 font-lock-type-face t t))
-    '("new \\(\\\\\\|\\(\\sw+\\)\\)+(" (1 font-lock-type-face t t))
+    '("new \\\\?\\(\\sw+\\)(" (1 font-lock-type-face t t))
 
     ;; Warn on any words not already fontified
     ;; '("\\<\\sw+\\>" . font-lock-warning-face)

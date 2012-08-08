@@ -5,6 +5,7 @@ Feature: Statement Cont Lineup
   
   Scenario: Second line of anonymous function
     Given I am in buffer "test.php"
+    And I clear the buffer
     And I insert: 
     """
     <?php
@@ -39,8 +40,8 @@ Feature: Font Locking
   Scenario: Font locking of anonymous function and return
     Given I am in buffer "test.php"
     And I turn on font-lock-fontify-buffer
-    And I go to the beginning of text on line 10
+    And I go to the beginning of non-whitespace on line 10
     Then I should see the face font-lock-keyword-face
-    And I go to the beginning of text on line 11
+    And I go to the beginning of non-whitespace on line 11
     Then I should see the face font-lock-keyword-face
 

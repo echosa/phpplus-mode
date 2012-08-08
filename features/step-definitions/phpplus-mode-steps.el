@@ -43,14 +43,14 @@
                   "Expected face %s, actual face is %s."
                   expected-face actual-face))))
 
-(When "^I go to the beginning of line text$"
+(When "^I go to the beginning of line non-whitespace$"
       (lambda ()
-        (beginning-of-line-text)))
+        (beginning-of-line-non-whitespace)))
 
-(When "^I go to the beginning of text on line \\([0-9]+\\)$"
+(When "^I go to the beginning of non-whitespace on line \\([0-9]+\\)$"
       (lambda (line-num)
         (When "I go to line \"%s\"" line-num)
-        (When "I go to the beginning of line text")))
+        (When "I go to the beginning of line non-whitespace")))
 
 (When "^I print the buffer string$"
       (lambda ()
@@ -78,3 +78,6 @@
         (When "I go to line \"%s\"" line-num)
         (php-format-break-statement)))
 
+(When "^I set \\(.*\\) to \\(.*\\)$"
+      (lambda (symbol value)
+        (set (intern symbol) value)))

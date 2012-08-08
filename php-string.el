@@ -502,7 +502,7 @@ commands unless you tell it to IGNORE-ECHO."
                 (save-excursion
                   (insert text-string)
                   (re-search-forward "<\\?php" nil t)
-                  (beginning-of-line-text)
+                  (beginning-of-line-non-whitespace)
                   (indent-according-to-mode))
                 (indent-according-to-mode)
                 (end-of-line)))))))))
@@ -547,7 +547,7 @@ comment out the current statement."
     (save-excursion
       (if (region-active-p)
           (comment-dwim current-prefix-arg)
-        (beginning-of-line-text)
+        (beginning-of-line-non-whitespace)
         (if (php-parse-current 'comment)
             (let (begin
                   end
@@ -557,14 +557,14 @@ comment out the current statement."
                                (line-number-at-pos))))
               (while (and (php-parse-current 'comment)
                           (< 1 (line-number-at-pos)))
-                (beginning-of-line-text 0))
+                (beginning-of-line-non-whitespace 0))
               (unless (php-parse-current 'comment)
                 (forward-line))
-              (beginning-of-line-text)
+              (beginning-of-line-non-whitespace)
               (setq begin (line-beginning-position))
               (while (and (php-parse-current 'comment)
                           (< (line-number-at-pos) last-line))
-                (beginning-of-line-text 2))
+                (beginning-of-line-non-whitespace 2))
               (unless (php-parse-current 'comment)
                 (forward-line -1))
               (end-of-line)

@@ -26,7 +26,7 @@
 (defconst php-block-stmt-2-key
   (regexp-opt php-block-stmt-2-kwds))
 
-(defconst php-class-decl-kwds '("class" "interface"))
+(defconst php-class-decl-kwds '("class" "interface" "trait"))
 
 ;; (defconst php-class-key
 ;;   (concat
@@ -477,7 +477,7 @@
     '("\\\\\\([^$]\\(\\sw+\\)\\)" (1 font-lock-type-face nil t))
 
     ;; class declaration
-    '("\\<\\(class\\|interface\\)\\s-+\\(\\sw+\\)?"
+    '("\\<\\(class\\|interface\\|trait\\)\\s-+\\(\\sw+\\)?"
       (1 font-lock-keyword-face) (2 font-lock-type-face nil t))
     ;; handle several words specially, to include following word,
     ;; thereby excluding it from unknown-symbol checks later

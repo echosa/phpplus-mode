@@ -731,6 +731,7 @@ php+-mode, not including unittests or bundled packages."
   (setq c-special-indent-hook nil)
 
   (turn-on-font-lock)
+  (c-set-offset 'case-label '+)
   (c-set-offset 'cpp-macro 'php-cpp-macro-lineup)
   (c-set-offset 'arglist-intro 'php-arglist-intro-lineup)
   (c-set-offset 'arglist-close 'php-arglist-close-lineup)

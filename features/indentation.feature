@@ -41,3 +41,17 @@ Feature: Indentation
     And I go to line "7"
     And I press "TAB"
     Then I should be at column 12
+
+  Scenario: Case labels
+    Given I am in buffer "test.php"
+    And I clear the buffer
+    And I insert:
+    """
+    <?php
+    switch (test) {
+    case "foo":
+    """
+    And I turn on php+-mode
+    And I go to line "3"
+    and I press "TAB"
+    Then I should be at column 4

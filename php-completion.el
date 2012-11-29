@@ -81,7 +81,8 @@
 (defun php-completion-build-index ()
   "Builds the master hash table indexing the PHP documentation."
   (let ((hash (make-hash-table :test 'equal))
-        (dir-list (cddr (directory-files php-manual-path))))
+        (dir-list (when (file-exists-p php-manual-path)
+                    (cddr (directory-files php-manual-path)))))
     (dolist (entry dir-list)
       (let* ((parts (butlast (split-string entry "\\.")))
              (current-hash hash)
@@ -116,7 +117,9 @@
     (php-completion-candidates-remote)))
 
 (defun php-completion-candidates-local (&optional hash-list)
-  "Returns a list of all PHP completion candidate symbols, using the locally installed PHP manual.  Example hash-list: `('function' 'class' 'language.types')"
+  "Returns a list of all PHP completion candidate symbols, using
+the locally installed PHP manual.  Example
+hash-list: `('function' 'class' 'language.types')"
   (unless (and (boundp 'php-completion-index) php-completion-index)
     (php-completion-build-index))
   (let ((cand-list '())
@@ -126,12 +129,14 @@
             (hash-address (split-string hash "\\.")))
         (dolist (next-hash (butlast hash-address))
           (setq current-hash (gethash next-hash current-hash)))
-        (maphash (lambda (key val) 
-                   (add-to-list 'cand-list 
-                                (or (and (hash-table-p val)
-                                         (gethash 'proper-name val))
-                                    key)))
-                 (gethash (first (last hash-address)) current-hash))))
+        (let ((subhash (gethash (first (last hash-address)) current-hash)))
+          (when (hash-table-p subhash)
+            (maphash (lambda (key val) 
+                       (add-to-list 'cand-list 
+                                    (or (and (hash-table-p val)
+                                             (gethash 'proper-name val))
+                                        key)))
+                     subhash)))))
     (sort cand-list 'string<)))
 
 (defun php-completion-candidates-remote ()

@@ -258,7 +258,7 @@ indentation."
                (if (and (not (php-in-text-structp))
                         (looking-at-p "case"))
                    '+ 
-                 (make-vector 1 (* level php-basic-offset))))))))
+                 (make-vector 1 (current-column))))))))
 
 (defun php-statement-cont-lineup (element)
   "This lineup function handles indentation for statements."

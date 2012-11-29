@@ -2,7 +2,7 @@
 
 (defvar *php+-mode-test-dir* (concat (file-name-directory
                                     (symbol-file 'php+-mode-unittests)) 
-                                     "tests/"))
+                                     "test/"))
 (add-to-list 'load-path *php+-mode-test-dir*)
 (add-to-list 'load-path (concat *php+-mode-test-dir* "ert/"))
 (require 'ert)

@@ -1,0 +1,8 @@
+(source "melpa" "http://melpa.milkbox.net/packages/")
+
+(package "php+-mode" "2.1" "A better PHP mode with Zend Framework 1 support.")
+
+(development
+ (depends-on "ert")
+ (depends-on "ecukes")
+ (depends-on "espuds"))

@@ -473,7 +473,7 @@
       (1 font-lock-keyword-face) 
       (2 font-lock-type-face nil t))
 
-    '("\\\\\\(namespace\\|use\\)" (1 font-lock-type-face t t))
+    '("\\\\\\(namespace \\|use \\)" (1 font-lock-type-face t t))
     '("\\\\\\([^$]\\(\\sw+\\)\\)" (1 font-lock-type-face nil t))
 
     ;; class declaration

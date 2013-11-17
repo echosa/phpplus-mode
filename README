@@ -1,4 +1,11 @@
 php+-mode README
+
+**Note**: This package is no longer actively maintained. While it still has
+some neat features, php-mode has had better support and updates for newer
+versions of PHP. We have discussed getting php+-mode features into php-mode,
+but nothing has come of this as of yet. Feel free to continue using php+-mode,
+and if you find and fix any issues, don't hesitate to send pull requests.
+Thanks, and I hope that php+-mode has been helpful.
 ===============================================================================
 REQUIREMENTS
 
